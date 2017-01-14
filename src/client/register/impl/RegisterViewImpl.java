@@ -32,7 +32,7 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
 
     @Override
     public String getUser() {
-        return user.getText();
+        return nick.getText();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
 
     @Override
     public String getName() {
-        return null;
+        return user.getText();
     }
 
     @Override
@@ -67,7 +67,6 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
 
     protected void initializePanel(JPanel panel){
 
-        panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(new Color(255, 255, 255));
 
@@ -237,8 +236,8 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
 
     // Method for disable buttons for Login.
     private void disableButton() {
-        boolean disabled = user.getText().trim().isEmpty() || password.getPassword().toString().isEmpty();
-        loginButton.setEnabled(!disabled);
+        boolean disabled = user.getText().trim().isEmpty() || password.getPassword().toString().isEmpty() || nick.getText().trim().isEmpty() ;
+        registerButton.setEnabled(!disabled);
     }
 
     // Method to generate a JButton Icon.
