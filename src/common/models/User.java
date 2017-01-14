@@ -2,10 +2,9 @@ package common.models;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class User extends UnicastRemoteObject {
+public class User implements Serializable {
 
     private String name;
     private String nick;
