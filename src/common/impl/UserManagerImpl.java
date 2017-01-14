@@ -19,7 +19,7 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
     }
 
     @Override
-    public User connect(String nick, String password) {
+    public User connect(String nick, String password) throws RemoteException {
 
         User user = null;
 
@@ -32,7 +32,7 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
     }
 
     @Override
-    public User register(String nick, String name, String password) {
+    public User register(String nick, String name, String password) throws RemoteException {
 
         User user = null;
 
@@ -51,7 +51,7 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
     }
 
     @Override
-    public boolean disconnect(String nick) {
+    public boolean disconnect(String nick) throws RemoteException {
 
         return usersConnected.remove(nick) != null;
 

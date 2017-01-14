@@ -1,9 +1,11 @@
 package common.models;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class User implements Serializable {
+public class User extends UnicastRemoteObject {
 
     private String name;
     private String nick;
@@ -11,6 +13,8 @@ public class User implements Serializable {
 
     private List<Tweet> tweets;
     private List<User> following;
+
+    public User() throws RemoteException {}
 
     public String getName() {
         return name;

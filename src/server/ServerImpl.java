@@ -17,7 +17,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     }
 
     @Override
-    public UserManager getUserManager() {
+    public UserManager getUserManager() throws RemoteException {
         return userManager;
     }
 

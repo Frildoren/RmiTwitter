@@ -5,6 +5,8 @@ import client.login.LoginPresenter;
 import client.login.LoginView;
 import common.models.User;
 
+import java.rmi.RemoteException;
+
 public class LoginPresenterImpl extends BasePresenter<LoginView> implements LoginPresenter {
 
     @Override
@@ -16,11 +18,16 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
 
     @Override
     public void onLogin() {
-        User user = getClient().getServer().getUserManager().connect( getView().getUser(), getView().getPassword() );
-        if(user == null){
-            getView().showError("Incorrect credentials");
-        } else {
-            //TODO: Success login in
+        User user = null;
+        try {
+            user = getClient().getServer().getUserManager().connect( getView().getUser(), getView().getPassword() );
+            if(user == null){
+                getView().showError("Incorrect credentials");
+            } else {
+                //TODO: Success login in
+            }
+        } catch (RemoteException e) {
+            getView().showError("Connection error");
         }
     }
 
