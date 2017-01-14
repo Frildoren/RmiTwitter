@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class UserManagerImpl extends UnicastRemoteObject implements UserManager  {
+public class UserManagerImpl extends UnicastRemoteObject implements UserManager  {
 
     Map<String, User> usersConnected = new HashMap<>();
     Map<String, User> usersRegistered = new HashMap<>();
 
-    protected UserManagerImpl() throws RemoteException {
+    public UserManagerImpl() throws RemoteException {
     }
 
     @Override
