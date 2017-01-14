@@ -3,6 +3,7 @@ package client.login.impl;
 import client.base.impl.BasePresenter;
 import client.login.LoginPresenter;
 import client.login.LoginView;
+import common.models.User;
 
 public class LoginPresenterImpl extends BasePresenter<LoginView> implements LoginPresenter {
 
@@ -15,7 +16,12 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
 
     @Override
     public void onLogin() {
-
+        User user = getClient().getServer().getUserManager().connect( getView().getUser(), getView().getPassword() );
+        if(user == null){
+            getView().showError("Incorrect credentials");
+        } else {
+            //TODO: Success login in
+        }
     }
 
     @Override
