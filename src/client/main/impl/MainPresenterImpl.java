@@ -13,6 +13,16 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     protected MainView createView() {
         MainViewImpl mainView = new MainViewImpl();
         mainView.create(this);
+
+        try {
+            mainView.setUserName(getClient().getUser().getName());
+            mainView.setUserNick(getClient().getUser().getNick());
+            mainView.setUserTweets(getClient().getUser().getTweets().size());
+            mainView.setUserFollowing(getClient().getUser().getFollowing().size());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
         return mainView;
     }
 
