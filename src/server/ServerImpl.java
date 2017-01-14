@@ -1,5 +1,8 @@
 package server;
 
+import common.UserManager;
+import common.impl.UserManagerImpl;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -7,11 +10,17 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
-
+    private UserManager userManager;
 
     protected ServerImpl() throws RemoteException {
-        
+        userManager = new UserManagerImpl();
     }
+
+    @Override
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
 
     public static void main(String[] args){
 

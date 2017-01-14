@@ -2,6 +2,7 @@ package client;
 
 import client.base.impl.BasePresenter;
 import client.login.impl.LoginPresenterImpl;
+import common.models.User;
 import server.Server;
 
 import java.rmi.NotBoundException;
@@ -12,9 +13,25 @@ import java.rmi.registry.Registry;
 public class ClientImpl implements Client {
 
     private Server server;
+    private User user;
 
     public void setServer(Server server){
         this.server = server;
+    }
+
+    @Override
+    public Server getServer() {
+        return server;
+    }
+
+    @Override
+    public User getUser() {
+        return user;
+    }
+
+    @Override
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public static void main(String[] args){
