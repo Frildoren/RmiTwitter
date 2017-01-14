@@ -3,6 +3,7 @@ package client.login.impl;
 import client.base.impl.BasePresenter;
 import client.login.LoginPresenter;
 import client.login.LoginView;
+import client.main.impl.MainPresenterImpl;
 import client.register.impl.RegisterPresenterImpl;
 import common.models.User;
 
@@ -25,7 +26,9 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
             if(user == null){
                 getView().showError("Incorrect credentials");
             } else {
-                //TODO: Success login in
+                getClient().setUser(user);
+                createPresenter(MainPresenterImpl.class);
+                finish();
             }
         } catch (RemoteException e) {
             getView().showError("Connection error");
