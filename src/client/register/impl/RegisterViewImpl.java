@@ -18,9 +18,10 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
 
     private JPasswordField password;
     private JTextField user;
+    private JTextField nick;
 
-    private JButton loginButton;
-    private JLabel registerLabel;
+    private JButton registerButton;
+    private JLabel loginLabel;
 
     private final Dimension WINDOW_DIMENSION = new Dimension(600,400);
 
@@ -101,13 +102,13 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
         userOficialTip.setAlignmentX(Component.CENTER_ALIGNMENT);
         userOficialNamePanel.add(userOficialTip);
 
-        JTextField userOficial = new JTextField();
-        userOficial.setPreferredSize(new Dimension(600,30));
-        userOficial.setMaximumSize(new Dimension(600,30));
-        userOficial.setHorizontalAlignment(JTextField.CENTER);
+        user = new JTextField();
+        user.setPreferredSize(new Dimension(600,30));
+        user.setMaximumSize(new Dimension(600,30));
+        user.setHorizontalAlignment(JTextField.CENTER);
 
         userOficialNamePanel.add(userOficialTip);
-        userOficialNamePanel.add(userOficial);
+        userOficialNamePanel.add(user);
 
         dataPanel.add(userOficialNamePanel);
 
@@ -123,13 +124,13 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
         usernameTip.setAlignmentX(Component.CENTER_ALIGNMENT);
         userOficialNamePanel.add(usernameTip);
 
-        JTextField usernameOficial = new JTextField();
-        usernameOficial.setPreferredSize(new Dimension(600,30));
-        usernameOficial.setMaximumSize(new Dimension(600,30));
-        usernameOficial.setHorizontalAlignment(JTextField.CENTER);
+        nick = new JTextField();
+        nick.setPreferredSize(new Dimension(600,30));
+        nick.setMaximumSize(new Dimension(600,30));
+        nick.setHorizontalAlignment(JTextField.CENTER);
 
         userOficialNamePanel.add(usernameTip);
-        userOficialNamePanel.add(usernameOficial);
+        userOficialNamePanel.add(nick);
         dataPanel.add(userNamePanel);
 
 
@@ -144,7 +145,7 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
 
         passwordPanel.add(passwordTip);
 
-        JPasswordField password = new JPasswordField();
+        password = new JPasswordField();
         password.setPreferredSize(new Dimension(600,30));
         password.setMaximumSize(new Dimension(600,30));
         password.setHorizontalAlignment(JTextField.CENTER);
@@ -154,15 +155,12 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
         dataPanel.add(passwordPanel);
 
 
-
         // Bottom Panel
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel,BoxLayout.Y_AXIS));
         bottomPanel.setBackground(Color.white);
         bottomPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
 
-
-        JButton registerButton;
         registerButton = generateImageButton("res/check_icon_white.png",25,25,"Regístrate");
         Font loginButtonFont = new Font(registerButton.getFont().getFontName(), Font.PLAIN, registerButton.getFont().getSize()+3);
         registerButton.setFont(loginButtonFont);
@@ -174,7 +172,7 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
         registerButton.setBorder(new EmptyBorder(6, 136, 6, 136));
 
         registerButton.addActionListener(e -> {
-            // Perform login here.
+            getPresenter().onRegister();
         });
 
         bottomPanel.add(registerButton);
@@ -191,7 +189,7 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
         askText.setAlignmentX(Component.CENTER_ALIGNMENT);
         askText.setFont(askTextFont);
 
-        JLabel loginLabel = new JLabel("Iniciar sesión");
+        loginLabel = new JLabel("Iniciar sesión");
         Font loginTextFont = new Font(askText.getFont().getFontName(), Font.BOLD, askText.getFont().getSize()+1);
         loginLabel.setForeground(new Color(29, 161, 242));
         loginLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -201,7 +199,7 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
         {
             public void mouseClicked(MouseEvent e)
             {
-                // Perform register here.
+                getPresenter().onLogin();
             }
         });
 
@@ -214,8 +212,6 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
         panel.add(topPanel,BorderLayout.NORTH);
         panel.add(bottomPanel,BorderLayout.SOUTH);
         panel.add(dataPanel,BorderLayout.CENTER);
-
-
 
         DocumentListener listener = new DocumentListener() {
             @Override
@@ -234,7 +230,7 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
             }
         };
 
-        user.getDocument().addDocumentListener(listener);
+        this.user.getDocument().addDocumentListener(listener);
         password.getDocument().addDocumentListener(listener);
 
     }
@@ -261,29 +257,6 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
             return new JButton(imageIcon);
         }else{
             JButton label = new JButton(labelText);
-            label.setIcon(imageIcon);
-            return label;
-        }
-
-
-    }
-
-    // Method to generate a JLabel Icon.
-    private static JLabel generateImageLabel(String resourcePath, int width, int height, String labelText){
-        ImageIcon imageIcon = null;
-        try {
-            imageIcon = new ImageIcon(ImageIO.read( RegisterViewImpl.class.getResourceAsStream(resourcePath)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Image image = imageIcon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(width, height,  Image.SCALE_SMOOTH); // scale it the smooth way
-        imageIcon = new ImageIcon(newimg);  // transform it back
-
-        if (labelText == null){
-            return new JLabel(imageIcon);
-        }else{
-            JLabel label = new JLabel(labelText);
             label.setIcon(imageIcon);
             return label;
         }
