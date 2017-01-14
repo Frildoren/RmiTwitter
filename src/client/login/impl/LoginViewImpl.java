@@ -4,11 +4,15 @@ import client.base.impl.BaseFrameView;
 import client.login.LoginPresenter;
 import client.login.LoginView;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements LoginView {
 
@@ -16,11 +20,13 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
     private JTextField user;
 
     private JButton loginButton;
-    private JButton registerButton;
+    private JLabel registerLabel;
+
+    private final Dimension WINDOW_DIMENSION = new Dimension(600,400);
 
     @Override
     public String getTitle() {
-        return "Login - SwaggaIRC";
+        return "Twitter. Es lo que está pasando.";
     }
 
     @Override
@@ -37,13 +43,16 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
     protected void initializeFrame(JFrame frame){
 
         // Set graphics settings, like size and position.
-        frame.setSize(350,150);
-        frame.setPreferredSize(new Dimension(350,150));
+        frame.setSize(WINDOW_DIMENSION);
+        frame.setPreferredSize(WINDOW_DIMENSION);
         frame.setLocationRelativeTo(null);
 
         // Set options of the bar buttons.
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        // Set the type of layout for our frame.
+        frame.setLayout(new BorderLayout());
 
         // Show the frame.
         frame.pack();
@@ -52,78 +61,144 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
 
     protected void initializePanel(JPanel panel){
 
+        panel = new JPanel();
         panel.setLayout(new BorderLayout());
+        panel.setBackground(new Color(29, 161, 242));
+        panel.setBorder(new EmptyBorder(30, 80, 30, 80));
 
-        JPanel data = new JPanel(new GridBagLayout());
+        JPanel loginZone = new JPanel();
+        loginZone.setLayout(new BorderLayout());
+        loginZone.setBorder(new EmptyBorder(10, 20, 10, 20));
+        loginZone.setBackground(Color.WHITE);
 
-        GridBagConstraints cs = new GridBagConstraints();
-        cs.fill = GridBagConstraints.HORIZONTAL;
-        JPanel buttonsPanel = new JPanel();
+        // Top Zone
+        JPanel loginTextPanel = new JPanel();
+        loginTextPanel.setLayout(new BoxLayout(loginTextPanel,BoxLayout.Y_AXIS));
+        loginTextPanel.setBackground(Color.WHITE);
 
-        // User elements.
-        JLabel userLabel = new JLabel("User:");
-        cs.gridx = 0;
-        cs.gridy = 0;
-        cs.gridwidth = 1;
-        data.add(userLabel,cs);
+        JLabel loginText = new JLabel("Inicia sesión en Twitter");
+        Font loginTextFont = new Font(loginText.getFont().getFontName(), Font.PLAIN, loginText.getFont().getSize()+6);
+        loginText.setForeground(new Color(102, 117, 130));
+        loginText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginText.setFont(loginTextFont);
 
-        user = new JTextField(20);
-        cs.gridx = 1;
-        cs.gridy = 0;
-        cs.gridwidth = 2;
-        data.add(user,cs);
+        JLabel twitterIcon = generateImageLabel("res/twitter_icon_blue.png",25,25,null);
+        twitterIcon.setBorder(new EmptyBorder(8, 0, 0, 0));
+        twitterIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Password elements.
-        JLabel passwordLabel = new JLabel("Password:");
-        cs.gridx = 0;
-        cs.gridy = 1;
-        cs.gridwidth = 1;
-        data.add(passwordLabel,cs);
+        loginTextPanel.add(loginText);
+        loginTextPanel.add(twitterIcon);
+
+
+        loginZone.add(loginTextPanel,BorderLayout.NORTH);
+
+
+        // Center Zone
+        JPanel loginDataPanel = new JPanel();
+        loginDataPanel.setLayout(new BoxLayout(loginDataPanel,BoxLayout.Y_AXIS));
+        loginDataPanel.setBorder(new EmptyBorder(5, 0, 5, 0));
+        loginDataPanel.setBackground(Color.WHITE);
+
+        JPanel usernamePanel = new JPanel();
+        usernamePanel.setLayout(new BoxLayout(usernamePanel,BoxLayout.Y_AXIS));
+        usernamePanel.setBorder(new EmptyBorder(15, 0, 5, 0));
+        usernamePanel.setBackground(Color.WHITE);
+        usernamePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel usernameTip = new JLabel("Nombre de usuario:");
+        usernameTip.setAlignmentX(Component.CENTER_ALIGNMENT);
+        usernamePanel.add(usernameTip);
+
+        user = new JTextField();
+        user.setPreferredSize(new Dimension(800,30));
+        user.setMaximumSize(new Dimension(800,30));
+
+        usernamePanel.add(user);
+
+
+        JPanel passwordPanel = new JPanel();
+        passwordPanel.setLayout(new BoxLayout(passwordPanel,BoxLayout.Y_AXIS));
+        passwordPanel.setBorder(new EmptyBorder(5, 0, 40, 0));
+        passwordPanel.setBackground(Color.WHITE);
 
         password = new JPasswordField();
-        cs.gridx = 1;
-        cs.gridy = 1;
-        cs.gridwidth = 2;
-        data.add(password,cs);
+        password.setPreferredSize(new Dimension(800,30));
+        password.setMaximumSize(new Dimension(800,30));
 
-        // Button elements.
-        loginButton = new JButton (new AbstractAction("Login") {
-            public void actionPerformed(ActionEvent e) {
-                getPresenter().onLogin();
-            }
+        JLabel passwordTip = new JLabel("Contraseña:");
+        passwordTip.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        passwordPanel.add(passwordTip);
+        passwordPanel.add(password);
+
+        loginButton = generateImageButton("res/fingerprint_icon_white.png",25,25,"Iniciar sesión");
+        Font loginButtonFont = new Font(loginButton.getFont().getFontName(), Font.PLAIN, loginButton.getFont().getSize()+3);
+        loginButton.setFont(loginButtonFont);
+        loginButton.setBackground(new Color(0, 132, 180));
+        loginButton.setOpaque(true);
+        loginButton.setBorderPainted(false);
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginButton.setBorder(new EmptyBorder(6, 136, 6, 136));
+
+        loginButton.addActionListener(e -> {
+            getPresenter().onLogin();
         });
 
-        registerButton = new JButton (new AbstractAction("Register") {
-            public void actionPerformed(ActionEvent e) {
+        loginDataPanel.add(usernamePanel);
+        loginDataPanel.add(passwordPanel);
+        loginDataPanel.add(loginButton);
+
+        loginZone.add(loginDataPanel,BorderLayout.CENTER);
+
+
+        // Bottom Zone
+        JPanel registerTextPanel = new JPanel();
+        registerTextPanel.setLayout(new FlowLayout());
+        registerTextPanel.setBackground(Color.WHITE);
+
+        JLabel askText = new JLabel("¿No tienes una cuenta?");
+        Font askTextFont = new Font(askText.getFont().getFontName(), Font.PLAIN, askText.getFont().getSize()+2);
+        askText.setForeground(new Color(102, 117, 130));
+        askText.setBorder(new EmptyBorder(0, 0, 0, 5));
+        askText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        askText.setFont(askTextFont);
+
+        registerLabel = new JLabel("Regístrate");
+        Font registerTextFont = new Font(askText.getFont().getFontName(), Font.BOLD, askText.getFont().getSize()+1);
+        registerLabel.setForeground(new Color(29, 161, 242));
+        registerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        registerLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        registerLabel.setFont(registerTextFont);
+        registerLabel.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
                 getPresenter().onRegister();
             }
         });
 
+        registerTextPanel.add(askText);
+        registerTextPanel.add(registerLabel);
+        loginZone.add(registerTextPanel,BorderLayout.SOUTH);
 
-        buttonsPanel.add(loginButton);
-        buttonsPanel.add(registerButton);
-
-        loginButton.setEnabled(false);
-        registerButton.setEnabled(false);
-
-        panel.add(data,BorderLayout.CENTER);
-        panel.add(buttonsPanel,BorderLayout.PAGE_END);
+        panel.add(loginZone,BorderLayout.CENTER);
 
 
         DocumentListener listener = new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                disableButtons();
+                disableButton();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                disableButtons();
+                disableButton();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                disableButtons();
+                disableButton();
             }
         };
 
@@ -132,13 +207,57 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
 
     }
 
-    private void disableButtons() {
+    // Method for disable buttons for Login.
+    private void disableButton() {
         boolean disabled = user.getText().trim().isEmpty() || password.getPassword().toString().isEmpty();
         loginButton.setEnabled(!disabled);
-        registerButton.setEnabled(!disabled);
     }
 
+    // Method to generate a JButton Icon.
+    private static JButton generateImageButton(String resourcePath, int width, int height, String labelText){
+        ImageIcon imageIcon = null;
+        try {
+            imageIcon = new ImageIcon(ImageIO.read( LoginViewImpl.class.getResourceAsStream(resourcePath)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Image image = imageIcon.getImage(); // transform it
+        Image newimg = image.getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imageIcon = new ImageIcon(newimg);  // transform it back
 
+        if (labelText == null){
+            return new JButton(imageIcon);
+        }else{
+            JButton label = new JButton(labelText);
+            label.setIcon(imageIcon);
+            return label;
+        }
+
+
+    }
+
+    // Method to generate a JLabel Icon.
+    private static JLabel generateImageLabel(String resourcePath, int width, int height, String labelText){
+        ImageIcon imageIcon = null;
+        try {
+            imageIcon = new ImageIcon(ImageIO.read( LoginViewImpl.class.getResourceAsStream(resourcePath)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Image image = imageIcon.getImage(); // transform it
+        Image newimg = image.getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imageIcon = new ImageIcon(newimg);  // transform it back
+
+        if (labelText == null){
+            return new JLabel(imageIcon);
+        }else{
+            JLabel label = new JLabel(labelText);
+            label.setIcon(imageIcon);
+            return label;
+        }
+
+
+    }
 
 
 }
