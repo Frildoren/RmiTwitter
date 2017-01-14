@@ -3,6 +3,7 @@ package client.login.impl;
 import client.base.impl.BasePresenter;
 import client.login.LoginPresenter;
 import client.login.LoginView;
+import client.register.impl.RegisterPresenterImpl;
 import common.models.User;
 
 import java.rmi.RemoteException;
@@ -33,9 +34,8 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
 
     @Override
     public void onRegister() {
-        //TODO:
-        // createPresenter(getClient(), RegisterPresenterImpl.class);
-        // finish();
+        createPresenter(getClient(), RegisterPresenterImpl.class);
+        finish();
     }
 
 }

@@ -81,7 +81,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
         loginText.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginText.setFont(loginTextFont);
 
-        JLabel twitterIcon = generateImageLabel("twitter_icon_blue.png",25,25,null);
+        JLabel twitterIcon = generateImageLabel("res/twitter_icon_blue.png",25,25,null);
         twitterIcon.setBorder(new EmptyBorder(8, 0, 0, 0));
         twitterIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -130,7 +130,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
         passwordPanel.add(passwordTip);
         passwordPanel.add(password);
 
-        loginButton = generateImageButton("/fingerprint_icon_white.png",25,25,"Iniciar sesión");
+        loginButton = generateImageButton("res/fingerprint_icon_white.png",25,25,"Iniciar sesión");
         Font loginButtonFont = new Font(loginButton.getFont().getFontName(), Font.PLAIN, loginButton.getFont().getSize()+3);
         loginButton.setFont(loginButtonFont);
         loginButton.setBackground(new Color(0, 132, 180));
@@ -139,6 +139,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
         loginButton.setForeground(Color.WHITE);
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginButton.setBorder(new EmptyBorder(6, 136, 6, 136));
+        loginButton.setEnabled(false);
 
         loginButton.addActionListener(e -> {
             getPresenter().onLogin();
@@ -239,7 +240,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
     private JLabel generateImageLabel(String resourcePath, int width, int height, String labelText){
         ImageIcon imageIcon = null;
         try {
-            imageIcon = new ImageIcon(ImageIO.read( ClassLoader.getSystemClassLoader().getResourceAsStream(resourcePath)) );
+            imageIcon = new ImageIcon(ImageIO.read( LoginViewImpl.class.getResourceAsStream(resourcePath)) );
         } catch (IOException e) {
             e.printStackTrace();
         }
