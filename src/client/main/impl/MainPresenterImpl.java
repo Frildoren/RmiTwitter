@@ -9,4 +9,19 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     protected MainView createView() {
         return null;
     }
+
+    @Override
+    public void onSearch() {
+
+    }
+
+    @Override
+    public void onFollowingClick() {
+
+    }
+
+    @Override
+    public void onDisconnect() {
+
+    }
 }

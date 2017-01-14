@@ -6,7 +6,7 @@ import client.base.View;
 public interface MainPresenter extends Presenter<MainView> {
 
     void onSearch();
-    void onFollowingClic();
+    void onFollowingClick();
     void onDisconnect();
 
 }
