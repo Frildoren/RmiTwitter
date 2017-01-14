@@ -1,0 +1,9 @@
+grant Codebase "http://172.16.173.144/servidor/"  {
+    permission java.security.AllPermission;
+};
+
+grant {
+	permission java.net.SocketPermission 
+               "*:1024-65535", 
+               "connect,accept,resolve";
+};
