@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsView {
-
+    
     @Override
     protected void initializePanel(JPanel panel) {
 
@@ -32,9 +32,9 @@ public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsV
     public void setTweets(List<Tweet> tweets) {
 
         tweets.forEach(tweet -> {
-            generateTweet(tweet.getUser().getNick(),tweet.getUser().getName(),"res/defaultprofile.png",tweet.getDate(),tweet.getTweet());
+            getPanel().removeAll();
+            getPanel().add(generateTweet(tweet.getUser().getNick(),tweet.getUser().getName(),"res/defaultprofile.png",tweet.getDate(),tweet.getTweet()),0);
         });
-
 
     }
 
@@ -227,8 +227,8 @@ public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsV
         tweetpanel.add(infoAndTweet,BorderLayout.CENTER);
 
         tweetpanel.add(interactions,BorderLayout.SOUTH);
-        tweetpanel.setPreferredSize(new Dimension(panelDimension.width,110));
-        tweetpanel.setMaximumSize(new Dimension(panelDimension.width,110));
+        tweetpanel.setPreferredSize(new Dimension(getPanel().getWidth(),110));
+        tweetpanel.setMaximumSize(new Dimension(getPanel().getWidth(),110));
         tweetpanel.setBorder(new EmptyBorder(0, 0, 10, 5));
 
 
