@@ -207,7 +207,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
 
     }
 
-    // Method for disable buttons for Login.
+    // Method for disable buttons for Login.LoginViewImpl
     private void disableButton() {
         boolean disabled = user.getText().trim().isEmpty() || password.getPassword().toString().isEmpty();
         loginButton.setEnabled(!disabled);
@@ -240,7 +240,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
     private static JLabel generateImageLabel(String resourcePath, int width, int height, String labelText){
         ImageIcon imageIcon = null;
         try {
-            imageIcon = new ImageIcon(ImageIO.read( LoginViewImpl.class.getResourceAsStream(resourcePath)));
+            imageIcon = new ImageIcon(ImageIO.read( LoginViewImpl.class.getResourceAsStream(resourcePath)) );
         } catch (IOException e) {
             e.printStackTrace();
         }

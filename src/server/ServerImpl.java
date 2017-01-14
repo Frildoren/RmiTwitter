@@ -1,5 +1,8 @@
 package server;
 
+import common.UserManager;
+import common.impl.UserManagerImpl;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -7,7 +10,17 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
-    protected ServerImpl() throws RemoteException {}
+    private UserManager userManager;
+
+    protected ServerImpl() throws RemoteException {
+        userManager = new UserManagerImpl();
+    }
+
+    @Override
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
 
     public static void main(String[] args){
 
@@ -26,7 +39,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             }
 
             Registry register = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
-            register.rebind("twitter.server", new ServerImpl());
+            register.rebind(NAME, new ServerImpl());
 
             System.out.println("Server ready on "+ address + "...");
 
