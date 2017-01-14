@@ -32,6 +32,7 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
             }
         } catch (RemoteException e) {
             getView().showError("Connection error");
+            e.printStackTrace(System.err);
         }
     }
 

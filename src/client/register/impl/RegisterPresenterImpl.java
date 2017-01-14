@@ -39,6 +39,7 @@ public class RegisterPresenterImpl extends BasePresenter<RegisterView> implement
             }
         } catch (RemoteException e) {
             getView().showError("Connection error");
+            e.printStackTrace(System.err);
         }
     }
     
