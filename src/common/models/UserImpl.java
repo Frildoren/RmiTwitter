@@ -2,6 +2,7 @@ package common.models;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserImpl extends UnicastRemoteObject implements User {
@@ -13,7 +14,10 @@ public class UserImpl extends UnicastRemoteObject implements User {
     private List<Tweet> tweets;
     private List<User> following;
 
-    public UserImpl() throws RemoteException {}
+    public UserImpl() throws RemoteException {
+        tweets = new ArrayList<>();
+        following = new ArrayList<>();
+    }
 
     @Override
     public String getName() throws RemoteException {
