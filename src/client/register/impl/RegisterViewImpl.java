@@ -26,7 +26,7 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
 
     @Override
     public String getTitle() {
-        return "Twitter. Es lo que está pasando.";
+        return "Regístrate en Twitter.";
     }
 
     @Override
@@ -68,126 +68,153 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
 
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setBackground(new Color(29, 161, 242));
-        panel.setBorder(new EmptyBorder(30, 80, 30, 80));
+        panel.setBackground(new Color(255, 255, 255));
 
-        JPanel loginZone = new JPanel();
-        loginZone.setLayout(new BorderLayout());
-        loginZone.setBorder(new EmptyBorder(10, 20, 10, 20));
-        loginZone.setBackground(Color.WHITE);
-
-        // Top Zone
-        JPanel loginTextPanel = new JPanel();
-        loginTextPanel.setLayout(new BoxLayout(loginTextPanel,BoxLayout.Y_AXIS));
-        loginTextPanel.setBackground(Color.WHITE);
-
-        JLabel loginText = new JLabel("Inicia sesión en Twitter");
-        Font loginTextFont = new Font(loginText.getFont().getFontName(), Font.PLAIN, loginText.getFont().getSize()+6);
-        loginText.setForeground(new Color(102, 117, 130));
-        loginText.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loginText.setFont(loginTextFont);
-
-        JLabel twitterIcon = generateImageLabel("res/twitter_icon_blue.png",25,25,null);
-        twitterIcon.setBorder(new EmptyBorder(8, 0, 0, 0));
-        twitterIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        loginTextPanel.add(loginText);
-        loginTextPanel.add(twitterIcon);
+        // Top Panel
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel,BoxLayout.Y_AXIS));
+        topPanel.setBackground(Color.white);
 
 
-        loginZone.add(loginTextPanel,BorderLayout.NORTH);
+        JLabel registerText = new JLabel("Únete hoy a Twitter.");
+        Font registerTextFont = new Font(registerText.getFont().getFontName(), Font.PLAIN, registerText.getFont().getSize()+6);
+        registerText.setForeground(new Color(44, 49, 55));
+        registerText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        registerText.setBorder(new EmptyBorder(10, 0, 10, 0));
+        registerText.setFont(registerTextFont);
+
+        topPanel.add(registerText);
 
 
         // Center Zone
-        JPanel loginDataPanel = new JPanel();
-        loginDataPanel.setLayout(new BoxLayout(loginDataPanel,BoxLayout.Y_AXIS));
-        loginDataPanel.setBorder(new EmptyBorder(5, 0, 5, 0));
-        loginDataPanel.setBackground(Color.WHITE);
+        JPanel dataPanel = new JPanel();
+        dataPanel.setLayout(new BoxLayout(dataPanel,BoxLayout.Y_AXIS));
+        dataPanel.setBorder(new EmptyBorder(20, 80, 5, 80));
+        dataPanel.setBackground(Color.white);
 
-        JPanel usernamePanel = new JPanel();
-        usernamePanel.setLayout(new BoxLayout(usernamePanel,BoxLayout.Y_AXIS));
-        usernamePanel.setBorder(new EmptyBorder(15, 0, 5, 0));
-        usernamePanel.setBackground(Color.WHITE);
-        usernamePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel userOficialNamePanel = new JPanel();
+        userOficialNamePanel.setLayout(new BoxLayout(userOficialNamePanel,BoxLayout.Y_AXIS));
+        userOficialNamePanel.setBackground(Color.WHITE);
+        userOficialNamePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel userOficialTip = new JLabel("Nombre completo:");
+        userOficialTip.setAlignmentX(Component.CENTER_ALIGNMENT);
+        userOficialNamePanel.add(userOficialTip);
+
+        JTextField userOficial = new JTextField();
+        userOficial.setPreferredSize(new Dimension(600,30));
+        userOficial.setMaximumSize(new Dimension(600,30));
+        userOficial.setHorizontalAlignment(JTextField.CENTER);
+
+        userOficialNamePanel.add(userOficialTip);
+        userOficialNamePanel.add(userOficial);
+
+        dataPanel.add(userOficialNamePanel);
+
+
+        JPanel userNamePanel = new JPanel();
+        userNamePanel.setLayout(new BoxLayout(userNamePanel,BoxLayout.Y_AXIS));
+        userNamePanel.setBackground(Color.WHITE);
+        userNamePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         JLabel usernameTip = new JLabel("Nombre de usuario:");
+        usernameTip.setBorder(new EmptyBorder(20, 0, 0, 0));
         usernameTip.setAlignmentX(Component.CENTER_ALIGNMENT);
-        usernamePanel.add(usernameTip);
+        userOficialNamePanel.add(usernameTip);
 
-        user = new JTextField();
-        user.setPreferredSize(new Dimension(800,30));
-        user.setMaximumSize(new Dimension(800,30));
+        JTextField usernameOficial = new JTextField();
+        usernameOficial.setPreferredSize(new Dimension(600,30));
+        usernameOficial.setMaximumSize(new Dimension(600,30));
+        usernameOficial.setHorizontalAlignment(JTextField.CENTER);
 
-        usernamePanel.add(user);
+        userOficialNamePanel.add(usernameTip);
+        userOficialNamePanel.add(usernameOficial);
+        dataPanel.add(userNamePanel);
 
 
         JPanel passwordPanel = new JPanel();
         passwordPanel.setLayout(new BoxLayout(passwordPanel,BoxLayout.Y_AXIS));
-        passwordPanel.setBorder(new EmptyBorder(5, 0, 40, 0));
         passwordPanel.setBackground(Color.WHITE);
-
-        password = new JPasswordField();
-        password.setPreferredSize(new Dimension(800,30));
-        password.setMaximumSize(new Dimension(800,30));
+        passwordPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel passwordTip = new JLabel("Contraseña:");
+        passwordTip.setBorder(new EmptyBorder(20, 0, 0, 0));
         passwordTip.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         passwordPanel.add(passwordTip);
+
+        JPasswordField password = new JPasswordField();
+        password.setPreferredSize(new Dimension(600,30));
+        password.setMaximumSize(new Dimension(600,30));
+        password.setHorizontalAlignment(JTextField.CENTER);
+
+        passwordPanel.add(passwordTip);
         passwordPanel.add(password);
+        dataPanel.add(passwordPanel);
 
-        loginButton = generateImageButton("res/fingerprint_icon_white.png",25,25,"Iniciar sesión");
-        Font loginButtonFont = new Font(loginButton.getFont().getFontName(), Font.PLAIN, loginButton.getFont().getSize()+3);
-        loginButton.setFont(loginButtonFont);
-        loginButton.setBackground(new Color(0, 132, 180));
-        loginButton.setOpaque(true);
-        loginButton.setBorderPainted(false);
-        loginButton.setForeground(Color.WHITE);
-        loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loginButton.setBorder(new EmptyBorder(6, 136, 6, 136));
 
-        loginButton.addActionListener(e -> {
-            getPresenter().onLogin();
+
+        // Bottom Panel
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel,BoxLayout.Y_AXIS));
+        bottomPanel.setBackground(Color.white);
+        bottomPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
+
+
+        JButton registerButton;
+        registerButton = generateImageButton("res/check_icon_white.png",25,25,"Regístrate");
+        Font loginButtonFont = new Font(registerButton.getFont().getFontName(), Font.PLAIN, registerButton.getFont().getSize()+3);
+        registerButton.setFont(loginButtonFont);
+        registerButton.setBackground(new Color(0, 132, 180));
+        registerButton.setOpaque(true);
+        registerButton.setBorderPainted(false);
+        registerButton.setForeground(Color.WHITE);
+        registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        registerButton.setBorder(new EmptyBorder(6, 136, 6, 136));
+
+        registerButton.addActionListener(e -> {
+            // Perform login here.
         });
 
-        loginDataPanel.add(usernamePanel);
-        loginDataPanel.add(passwordPanel);
-        loginDataPanel.add(loginButton);
+        bottomPanel.add(registerButton);
 
-        loginZone.add(loginDataPanel,BorderLayout.CENTER);
+        JPanel loginPanel = new JPanel();
+        loginPanel.setLayout(new FlowLayout());
+        loginPanel.setBackground(Color.WHITE);
+        loginPanel.setBorder(new EmptyBorder(10, 0, 0, 0));
 
-
-        // Bottom Zone
-        JPanel registerTextPanel = new JPanel();
-        registerTextPanel.setLayout(new FlowLayout());
-        registerTextPanel.setBackground(Color.WHITE);
-
-        JLabel askText = new JLabel("¿No tienes una cuenta?");
+        JLabel askText = new JLabel("¿Tienes cuenta?");
         Font askTextFont = new Font(askText.getFont().getFontName(), Font.PLAIN, askText.getFont().getSize()+2);
         askText.setForeground(new Color(102, 117, 130));
         askText.setBorder(new EmptyBorder(0, 0, 0, 5));
         askText.setAlignmentX(Component.CENTER_ALIGNMENT);
         askText.setFont(askTextFont);
 
-        registerLabel = new JLabel("Regístrate");
-        Font registerTextFont = new Font(askText.getFont().getFontName(), Font.BOLD, askText.getFont().getSize()+1);
-        registerLabel.setForeground(new Color(29, 161, 242));
-        registerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        registerLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        registerLabel.setFont(registerTextFont);
-        registerLabel.addMouseListener(new MouseAdapter()
+        JLabel loginLabel = new JLabel("Iniciar sesión");
+        Font loginTextFont = new Font(askText.getFont().getFontName(), Font.BOLD, askText.getFont().getSize()+1);
+        loginLabel.setForeground(new Color(29, 161, 242));
+        loginLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        loginLabel.setFont(loginTextFont);
+        loginLabel.addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent e)
             {
-                getPresenter().onRegister();
+                // Perform register here.
             }
         });
 
-        registerTextPanel.add(askText);
-        registerTextPanel.add(registerLabel);
-        loginZone.add(registerTextPanel,BorderLayout.SOUTH);
+        loginPanel.add(askText);
+        loginPanel.add(loginLabel);
 
-        panel.add(loginZone,BorderLayout.CENTER);
+        bottomPanel.add(loginPanel);
+
+
+        panel.add(topPanel,BorderLayout.NORTH);
+        panel.add(bottomPanel,BorderLayout.SOUTH);
+        panel.add(dataPanel,BorderLayout.CENTER);
+
 
 
         DocumentListener listener = new DocumentListener() {
