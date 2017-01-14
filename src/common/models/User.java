@@ -1,57 +1,28 @@
 package common.models;
 
-import java.io.Serializable;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public class User implements Serializable {
+public interface User extends Remote {
 
-    private String name;
-    private String nick;
-    private String password;
+    String getName() throws RemoteException;
 
-    private List<Tweet> tweets;
-    private List<User> following;
+    void setName(String name) throws RemoteException;
 
-    public User() throws RemoteException {}
+    String getNick() throws RemoteException;
 
-    public String getName() {
-        return name;
-    }
+    void setNick(String nick) throws RemoteException;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    String getPassword() throws RemoteException;
 
-    public String getNick() {
-        return nick;
-    }
+    void setPassword(String password) throws RemoteException;
 
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
+    List<Tweet> getTweets() throws RemoteException;
 
-    public String getPassword() {
-        return password;
-    }
+    void setTweets(List<Tweet> tweets) throws RemoteException;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    List<User> getFollowing() throws RemoteException;
 
-    public List<Tweet> getTweets() {
-        return tweets;
-    }
-
-    public void setTweets(List<Tweet> tweets) {
-        this.tweets = tweets;
-    }
-
-    public List<User> getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(List<User> following) {
-        this.following = following;
-    }
+    void setFollowing(List<User> following) throws RemoteException;
 }
