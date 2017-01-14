@@ -61,7 +61,6 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
 
     protected void initializePanel(JPanel panel){
 
-        panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(new Color(29, 161, 242));
         panel.setBorder(new EmptyBorder(30, 80, 30, 80));
@@ -82,7 +81,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
         loginText.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginText.setFont(loginTextFont);
 
-        JLabel twitterIcon = generateImageLabel("res/twitter_icon_blue.png",25,25,null);
+        JLabel twitterIcon = generateImageLabel("twitter_icon_blue.png",25,25,null);
         twitterIcon.setBorder(new EmptyBorder(8, 0, 0, 0));
         twitterIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -131,7 +130,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
         passwordPanel.add(passwordTip);
         passwordPanel.add(password);
 
-        loginButton = generateImageButton("res/fingerprint_icon_white.png",25,25,"Iniciar sesión");
+        loginButton = generateImageButton("/fingerprint_icon_white.png",25,25,"Iniciar sesión");
         Font loginButtonFont = new Font(loginButton.getFont().getFontName(), Font.PLAIN, loginButton.getFont().getSize()+3);
         loginButton.setFont(loginButtonFont);
         loginButton.setBackground(new Color(0, 132, 180));
@@ -214,7 +213,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
     }
 
     // Method to generate a JButton Icon.
-    private static JButton generateImageButton(String resourcePath, int width, int height, String labelText){
+    private JButton generateImageButton(String resourcePath, int width, int height, String labelText){
         ImageIcon imageIcon = null;
         try {
             imageIcon = new ImageIcon(ImageIO.read( LoginViewImpl.class.getResourceAsStream(resourcePath)));
@@ -237,10 +236,10 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
     }
 
     // Method to generate a JLabel Icon.
-    private static JLabel generateImageLabel(String resourcePath, int width, int height, String labelText){
+    private JLabel generateImageLabel(String resourcePath, int width, int height, String labelText){
         ImageIcon imageIcon = null;
         try {
-            imageIcon = new ImageIcon(ImageIO.read( LoginViewImpl.class.getResourceAsStream(resourcePath)) );
+            imageIcon = new ImageIcon(ImageIO.read( ClassLoader.getSystemClassLoader().getResourceAsStream(resourcePath)) );
         } catch (IOException e) {
             e.printStackTrace();
         }
