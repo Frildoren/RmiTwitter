@@ -2,6 +2,7 @@ package common.impl;
 
 import common.UserManager;
 import common.models.User;
+import common.models.UserImpl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -35,7 +36,7 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
         User user = null;
 
         if(!usersRegistered.containsKey(nick)) {
-            user = new User();
+            user = new UserImpl();
 
             user.setNick(nick);
             user.setName(name);

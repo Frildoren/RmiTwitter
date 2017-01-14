@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,11 @@ public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsV
 
         tweets.forEach(tweet -> {
             getPanel().removeAll();
-            getPanel().add(generateTweet(tweet.getUser().getNick(),tweet.getUser().getName(),"res/defaultprofile.png",tweet.getDate(),tweet.getTweet()),0);
+            try {
+                getPanel().add(generateTweet(tweet.getUser().getNick(),tweet.getUser().getName(),"res/defaultprofile.png",tweet.getDate(),tweet.getTweet()),0);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         });
 
     }
