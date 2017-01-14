@@ -7,7 +7,11 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
-    protected ServerImpl() throws RemoteException {}
+
+
+    protected ServerImpl() throws RemoteException {
+        
+    }
 
     public static void main(String[] args){
 
@@ -26,7 +30,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             }
 
             Registry register = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
-            register.rebind("twitter.server", new ServerImpl());
+            register.rebind(NAME, new ServerImpl());
 
             System.out.println("Server ready on "+ address + "...");
 
