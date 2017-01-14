@@ -2,6 +2,7 @@ package client.register.impl;
 
 import client.base.impl.BasePresenter;
 import client.login.impl.LoginPresenterImpl;
+import client.main.impl.MainPresenterImpl;
 import client.register.RegisterPresenter;
 import client.register.RegisterView;
 import common.models.User;
@@ -32,7 +33,9 @@ public class RegisterPresenterImpl extends BasePresenter<RegisterView> implement
             if(user == null){
                 getView().showError("Nickname already in use");
             } else {
-                //TODO: Success login in
+                getClient().setUser(user);
+                createPresenter(MainPresenterImpl.class);
+                finish();
             }
         } catch (RemoteException e) {
             getView().showError("Connection error");
