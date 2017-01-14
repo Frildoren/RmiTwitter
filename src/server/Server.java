@@ -1,4 +1,6 @@
 package server;
 
-public interface Server {
+import java.rmi.Remote;
+
+public interface Server extends Remote {
 }

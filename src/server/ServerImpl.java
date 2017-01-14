@@ -1,24 +1,39 @@
 package server;
 
-public class Server {
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+
+public class ServerImpl extends UnicastRemoteObject implements Server {
+
+    protected ServerImpl() throws RemoteException {}
 
     public static void main(String[] args){
 
-        try {
-            
+        String address = "127.0.0.1";
+        if(args.length > 0){
+            address = args[0];
         }
 
-
-        // Indico la IP donde se deben exportar los objetos remotos
-        System.setProperty("java.rmi.server.hostname", LOCALHOST);
-
-        // Indico desde donde se pueden descargar las clases que necesiten los
-        // clientes: ClienteJoven, ClienteBanco, etc...
-        System.setProperty("java.rmi.server.codebase", "http://" + LOCALHOST + "/twitter/");
-
-        // Añado la política de seguridad que permita leer las clases del codebase
+        System.setProperty("java.rmi.server.hostname", address);
+        System.setProperty("java.rmi.server.codebase", "http://" + address + "/twitter/");
         System.setProperty("java.security.policy", "twitter.policy");
 
+        try {
+            if (System.getSecurityManager() == null) {
+                System.setSecurityManager(new SecurityManager());
+            }
+
+            Registry register = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
+            register.rebind("twitter.server", new ServerImpl());
+
+            System.out.println("Server ready on "+ address + "...");
+
+        } catch (RemoteException e) {
+            System.err.println("Error on server startup:");
+            e.printStackTrace(System.err);
+        }
     }
 
 }
