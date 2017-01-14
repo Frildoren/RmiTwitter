@@ -169,6 +169,8 @@ public class RegisterViewImpl extends BaseFrameView<RegisterPresenter> implement
         registerButton.setForeground(Color.WHITE);
         registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         registerButton.setBorder(new EmptyBorder(6, 136, 6, 136));
+        registerButton.setEnabled(false);
+
 
         registerButton.addActionListener(e -> {
             getPresenter().onRegister();

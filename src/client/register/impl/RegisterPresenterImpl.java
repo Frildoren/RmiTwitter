@@ -1,11 +1,14 @@
 package client.register.impl;
 
-import client.RequestCallback;
 import client.base.impl.BasePresenter;
+import client.login.impl.LoginPresenterImpl;
 import client.register.RegisterPresenter;
 import client.register.RegisterView;
+import common.models.User;
 
-public class RegisterPresenterImpl extends BasePresenter<RegisterView> implements RegisterPresenter, RequestCallback {
+import java.rmi.RemoteException;
+
+public class RegisterPresenterImpl extends BasePresenter<RegisterView> implements RegisterPresenter {
 
     @Override
     protected RegisterView createView() {
@@ -16,18 +19,24 @@ public class RegisterPresenterImpl extends BasePresenter<RegisterView> implement
 
     @Override
     public void onLogin() {
+        createPresenter(LoginPresenterImpl.class);
+        finish();
     }
 
     @Override
     public void onRegister() {
-    }
 
-    @Override
-    public void success(Object response) {
+        try {
+            User user = null;
+            user = getClient().getServer().getUserManager().register( getView().getUser(), getView().getName(), getView().getPassword() );
+            if(user == null){
+                getView().showError("Nickname already in use");
+            } else {
+                //TODO: Success login in
+            }
+        } catch (RemoteException e) {
+            getView().showError("Connection error");
+        }
     }
-
-    @Override
-    public void failure(String error) {
-        getView().showError(error);
-    }
+    
 }
