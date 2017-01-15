@@ -128,54 +128,15 @@ public class PeopleViewImpl extends BaseView<PeoplePresenter> implements PeopleV
         // Add the name and username at east.
         usernames.add(names,BorderLayout.CENTER);
 
-
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel,BoxLayout.X_AXIS));
 
-        // Display buttons.
-
-        JButton followButton;
-        followButton = generateImageButton("res/person_icon_black.png",15,15,"Seguir ");
-        followButton.setBackground(new Color(255, 255, 255));
-        followButton.setOpaque(true);
-        followButton.setBorderPainted(false);
-        followButton.setForeground(Color.BLACK);
-        followButton.addActionListener(e -> {
-            //getPresenter().onFollowing(user);
-        });
-
-        buttonsPanel.add(followButton);
-
         profilePanel.add(usernames);
-        profilePanel.add(buttonsPanel);
 
-        profilePanel.setPreferredSize(new Dimension(270,130));
-        profilePanel.setMaximumSize(new Dimension(400,130));
+        profilePanel.setPreferredSize(new Dimension(270,80));
+        profilePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE,80));
 
         return profilePanel;
-    }
-
-    // Method to generate a JButton Icon.
-    private JButton generateImageButton(String resourcePath, int width, int height, String labelText){
-        ImageIcon imageIcon = null;
-        try {
-            imageIcon = new ImageIcon(ImageIO.read( PeopleViewImpl.class.getResourceAsStream(resourcePath)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Image image = imageIcon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        imageIcon = new ImageIcon(newimg);  // transform it back
-
-        if (labelText == null){
-            return new JButton(imageIcon);
-        }else{
-            JButton label = new JButton(labelText);
-            label.setIcon(imageIcon);
-            return label;
-        }
-
-
     }
 
     // Method to generate a JLabel Icon.
