@@ -4,7 +4,7 @@ import client.base.ParentPresenter;
 
 public interface MainPresenter extends ParentPresenter<MainView> {
 
-    void onSearch();
+    void onSearch(String search);
     void onFollowingClick();
     void onDisconnect();
 

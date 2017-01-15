@@ -39,7 +39,9 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     }
 
     @Override
-    public void onSearch() {
+    public void onSearch(String search) {
+
+        
 
     }
 
