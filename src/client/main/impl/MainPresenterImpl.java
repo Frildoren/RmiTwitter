@@ -27,6 +27,11 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         return mainView;
     }
 
+    private void showTimeline() {
+        TimelinePresenter timelinePresenter = createPresenter(TimelinePresenterImpl.class);
+        getView().setNestedView(timelinePresenter.getView());
+    }
+
     @Override
     public void initialize(Client client) {
         super.initialize(client);
@@ -37,8 +42,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
             getView().setUserTweets(getClient().getUser().getTweets().size());
             getView().setUserFollowing(getClient().getUser().getFollowing().size());
 
-            TimelinePresenter timelinePresenter = createPresenter(TimelinePresenterImpl.class);
-            getView().setNestedView(timelinePresenter.getView());
+            showTimeline();
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -81,6 +85,11 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         peoplePresenter.setTitle("Following");
         setNestedView(peoplePresenter.getView());
 
+    }
+
+    @Override
+    public void onHomeClick() {
+        showTimeline();
     }
 
     @Override

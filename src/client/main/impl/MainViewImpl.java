@@ -143,6 +143,10 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
 
         tweetAndPhotoPanel.add(searchBox);
 
+        //Action listener for home button
+        homeButton.addActionListener(e -> {
+            getPresenter().onHomeClick();
+        });
 
         JButton searchButton;
         searchButton = generateImageButton("res/search_icon_black.png",15,15,"Buscar ");
