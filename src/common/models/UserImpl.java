@@ -74,4 +74,23 @@ public class UserImpl extends UnicastRemoteObject implements User {
         this.following = following;
     }
 
+    @Override
+    public void follow(User user) throws RemoteException {
+        if(!isFollowing(user)) {
+            following.add(user);
+        }
+    }
+
+    @Override
+    public void unfollow(User user) throws RemoteException {
+        if (isFollowing(user)) {
+            following.remove(user);
+        }
+    }
+
+    @Override
+    public boolean isFollowing(User user) throws RemoteException {
+        return following.contains(user);
+    }
+
 }

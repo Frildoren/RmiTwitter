@@ -27,4 +27,10 @@ public interface User extends Remote {
     List<User> getFollowing() throws RemoteException;
 
     void setFollowing(List<User> following) throws RemoteException;
+
+    void follow(User user) throws RemoteException;
+
+    void unfollow(User user) throws RemoteException;
+
+    boolean isFollowing(User user) throws RemoteException;
 }
