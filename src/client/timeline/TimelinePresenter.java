@@ -1,9 +1,9 @@
 package client.timeline;
 
 
-import client.base.Presenter;
+import client.base.ParentPresenter;
 
-public interface TimelinePresenter extends Presenter<TimelineView> {
+public interface TimelinePresenter extends ParentPresenter<TimelineView> {
 
     void sendTweet(String tweet);
 

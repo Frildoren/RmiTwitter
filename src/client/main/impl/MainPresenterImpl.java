@@ -1,6 +1,7 @@
 package client.main.impl;
 
 import client.Client;
+import client.base.View;
 import client.base.impl.BasePresenter;
 import client.login.impl.LoginPresenterImpl;
 import client.main.MainPresenter;
@@ -62,5 +63,10 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
             getView().showError("Connection error");
         }
 
+    }
+
+    @Override
+    public void setNestedView(View view) {
+        getView().setNestedView(view);
     }
 }

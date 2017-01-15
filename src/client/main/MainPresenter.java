@@ -1,9 +1,8 @@
 package client.main;
 
-import client.base.Presenter;
-import client.base.View;
+import client.base.ParentPresenter;
 
-public interface MainPresenter extends Presenter<MainView> {
+public interface MainPresenter extends ParentPresenter<MainView> {
 
     void onSearch();
     void onFollowingClick();
