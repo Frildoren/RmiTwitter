@@ -152,12 +152,12 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         searchButton.setForeground(Color.BLACK);
 
         searchButton.addActionListener(e -> {
-            //getPresenter().onSearch(searchBox.getText().trim());
+            getPresenter().onSearch(searchBox.getText().trim());
             tweetAndPhotoPanel.requestFocusInWindow();
         });
 
         searchBox.addActionListener(e -> {
-            //getPresenter().onSearch(searchBox.getText().trim());
+            getPresenter().onSearch(searchBox.getText().trim());
             tweetAndPhotoPanel.requestFocusInWindow();
 
         });

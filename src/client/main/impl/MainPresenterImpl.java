@@ -6,10 +6,15 @@ import client.base.impl.BasePresenter;
 import client.login.impl.LoginPresenterImpl;
 import client.main.MainPresenter;
 import client.main.MainView;
+import client.people.PeoplePresenter;
+import client.people.impl.PeoplePresenterImpl;
 import client.timeline.TimelinePresenter;
 import client.timeline.impl.TimelinePresenterImpl;
+import common.models.User;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainPresenterImpl extends BasePresenter<MainView> implements MainPresenter {
 
@@ -39,7 +44,20 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     }
 
     @Override
-    public void onSearch() {
+    public void onSearch(String search) {
+
+        List<User> users = new ArrayList<>();
+
+        try {
+            users = getClient().getServer().getUserManager().search(search);
+        } catch (RemoteException e) {
+            getView().showError("Error while looking for users");
+            e.printStackTrace();
+        }
+
+        PeoplePresenter peoplePresenter = createPresenter(PeoplePresenterImpl.class);
+        peoplePresenter.setUserList(users);
+        setNestedView(peoplePresenter.getView());
 
     }
 

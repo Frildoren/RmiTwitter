@@ -6,7 +6,9 @@ import common.models.UserImpl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserManagerImpl extends UnicastRemoteObject implements UserManager  {
@@ -55,6 +57,21 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
     public boolean disconnect(String nick) throws RemoteException {
 
         return usersConnected.remove(nick) != null;
+
+    }
+
+    @Override
+    public List<User> search (String search) throws RemoteException {
+
+        List<User> users = new ArrayList<>();
+
+        for(String i : usersRegistered.keySet()) {
+            if(i.contains(search)) {
+                users.add(usersRegistered.get(i));
+            }
+        }
+
+        return users;
 
     }
 }
