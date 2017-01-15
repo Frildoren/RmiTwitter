@@ -29,7 +29,7 @@ public class TimelinePresenterImpl extends BasePresenter<TimelineView> implement
 
     private void showTimeline(){
         try {
-            List<Tweet> list = getClient().getUser().getTweets();
+            List<Tweet> list = getClient().getUser().getTimeline();
             TweetsPresenter tweetsPresenter = createPresenter(TweetsPresenterImpl.class);
             tweetsPresenter.setParentPresenter(this);
             tweetsPresenter.setTweets(list);

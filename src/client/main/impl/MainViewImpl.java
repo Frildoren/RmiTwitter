@@ -242,7 +242,7 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         {
             public void mouseClicked(MouseEvent e)
             {
-                //TODO:getPresenter().onUserClick(user);
+                getPresenter().onUserClick();
             }
         });
         names.add(name);
@@ -254,7 +254,7 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         {
             public void mouseClicked(MouseEvent e)
             {
-                //TODO:getPresenter().onUserClick(user);
+                getPresenter().onUserClick();
             }
         });
         names.add(usernameLabel);
@@ -300,6 +300,14 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         followingNumberLabel.setForeground(new Color(0, 132, 180));
         followingNumberLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         followingNumberLabel.setFont(nameFont);
+        followingNumberLabel.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                getPresenter().onFollowingClick();
+            }
+        });
+        followingNumberLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         following.add(followingNumberLabel);
 
         // Display of number of followers.

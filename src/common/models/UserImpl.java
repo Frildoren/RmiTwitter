@@ -2,8 +2,7 @@ package common.models;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class UserImpl extends UnicastRemoteObject implements User {
 
@@ -13,10 +12,13 @@ public class UserImpl extends UnicastRemoteObject implements User {
 
     private List<Tweet> tweets;
     private List<User> following;
+    private List<Tweet> messages;
 
     public UserImpl() throws RemoteException {
         tweets = new ArrayList<>();
         following = new ArrayList<>();
+        messages = new ArrayList<>();
+
     }
 
     @Override
@@ -91,6 +93,36 @@ public class UserImpl extends UnicastRemoteObject implements User {
     @Override
     public boolean isFollowing(User user) throws RemoteException {
         return following.contains(user);
+    }
+
+    @Override
+    public List<Tweet> getMessages() throws RemoteException {
+        return messages;
+    }
+
+    @Override
+    public void addMessage(Tweet message) throws RemoteException {
+        getMessages().add(message);
+    }
+
+    @Override
+    public void setMessages(List<Tweet> messages) throws RemoteException {
+        this.messages = messages;
+    }
+
+    @Override
+    public List<Tweet> getTimeline() throws RemoteException {
+        Map<Date, Tweet> tweetMap = new TreeMap<>();
+        getTweets().forEach(tweet -> tweetMap.put(tweet.getDate(), tweet));
+        getFollowing().forEach(user -> {
+            try {
+                user.getTweets().forEach(tweet -> tweetMap.put(tweet.getDate(), tweet));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+
+        return new ArrayList<>(tweetMap.values());
     }
 
 }
