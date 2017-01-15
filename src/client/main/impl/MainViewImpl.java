@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainView{
@@ -117,30 +119,62 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         buttonsPanel.setBackground(Color.WHITE);
 
         JButton homeButton = generateImageButton("res/home_icon_black.png",15,15,"Inicio");
-        JButton notificationButton = generateImageButton("res/notification_icon_black.png",15,15,"Notificaciones");
         JButton messagesButton = generateImageButton("res/messages_icon_black.png",15,15,"Mensajes");
 
         buttonsPanel.add(homeButton);
-        buttonsPanel.add(notificationButton);
         buttonsPanel.add(messagesButton);
 
         // Now we generate the picture and the tweet button of the right.
         JPanel tweetAndPhotoPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         tweetAndPhotoPanel.setBackground(Color.WHITE);
 
+
+        JTextField searchBox = new JTextField("Buscar usuario",15);
+
+        searchBox.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                searchBox.setText("");
+            }
+        });
+
+        tweetAndPhotoPanel.add(searchBox);
+
+
+        JButton searchButton;
+        searchButton = generateImageButton("res/createtweet_icon_white.png",15,15,"Buscar ");
+        searchButton.setBackground(new Color(0, 132, 180));
+        searchButton.setOpaque(true);
+        searchButton.setBorderPainted(false);
+        searchButton.setForeground(Color.WHITE);
+        tweetAndPhotoPanel.add(searchButton);
+
+
         JLabel profilePhoto;
         profilePhoto = generateImageLabel("res/defaultprofile.png",20,20,null);
         LineBorder profilePhotoBorder = new LineBorder(new Color(204, 204, 205), 1, true);
         profilePhoto.setBorder(profilePhotoBorder);
+        profilePhoto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        profilePhoto.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                if ( SwingUtilities.isLeftMouseButton(e) ) {
+                    JPopupMenu menu = new JPopupMenu();
+                    JMenuItem itemRemove = new JMenuItem("Desconectar");
+                    menu.add(itemRemove);
+                    menu.show(profilePhoto, e.getPoint().x, e.getPoint().y);
+
+                    itemRemove.addActionListener(e1 ->
+                            getPresenter().onDisconnect()
+                    );
+                }
+            }
+        });
+
+
         tweetAndPhotoPanel.add(profilePhoto);
 
-        JButton tweetButton;
-        tweetButton = generateImageButton("res/createtweet_icon_white.png",15,15,"TWITTEAR ");
-        tweetButton.setBackground(new Color(0, 132, 180));
-        tweetButton.setOpaque(true);
-        tweetButton.setBorderPainted(false);
-        tweetButton.setForeground(Color.WHITE);
-        tweetAndPhotoPanel.add(tweetButton);
+
 
 
         // Now we generate twitter logo in the center.

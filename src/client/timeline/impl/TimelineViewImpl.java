@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class TimelineViewImpl extends BaseView<TimelinePresenter> implements TimelineView {
@@ -42,8 +44,11 @@ public class TimelineViewImpl extends BaseView<TimelinePresenter> implements Tim
 
         JTextField tweetZone = new JTextField("¿Qué está pasando?",140);
         tweetZone.setBorder(new EmptyBorder(0, 5, 0, 10));
-        tweetZone.addActionListener(e -> {
-            tweetZone.setText(" ");
+        tweetZone.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                tweetZone.setText("");
+            }
         });
 
         tweetZone.setBackground(Color.WHITE);
