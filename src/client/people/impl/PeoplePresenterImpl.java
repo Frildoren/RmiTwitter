@@ -11,7 +11,9 @@ public class PeoplePresenterImpl extends BasePresenter<PeopleView> implements Pe
 
     @Override
     protected PeopleView createView() {
-        return null;
+        PeopleView peopleView = new PeopleViewImpl();
+        peopleView.create(this);
+        return peopleView;
     }
 
     @Override
