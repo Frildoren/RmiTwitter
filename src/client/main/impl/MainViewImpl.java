@@ -129,7 +129,9 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         tweetAndPhotoPanel.setBackground(Color.WHITE);
 
 
-        JTextField searchBox = new JTextField("Buscar usuario",15);
+        JTextField searchBox = new JTextField("¿A quién quieres buscar?",15);
+        searchBox.setBorder(new EmptyBorder(0, 5, 0, 10));
+
 
         searchBox.addMouseListener(new MouseAdapter(){
             @Override
@@ -139,22 +141,24 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         });
 
 
-
         tweetAndPhotoPanel.add(searchBox);
 
 
         JButton searchButton;
-        searchButton = generateImageButton("res/createtweet_icon_white.png",15,15,"Buscar ");
-        searchButton.setBackground(new Color(0, 132, 180));
+        searchButton = generateImageButton("res/search_icon_black.png",15,15,"Buscar ");
+        searchButton.setBackground(new Color(192, 222, 237));
         searchButton.setOpaque(true);
         searchButton.setBorderPainted(false);
-        searchButton.setForeground(Color.WHITE);
+        searchButton.setForeground(Color.BLACK);
+
         searchButton.addActionListener(e -> {
             //getPresenter().onSearch(searchBox.getText().trim());
+            tweetAndPhotoPanel.requestFocusInWindow();
         });
 
         searchBox.addActionListener(e -> {
             //getPresenter().onSearch(searchBox.getText().trim());
+            tweetAndPhotoPanel.requestFocusInWindow();
 
         });
 
@@ -233,10 +237,26 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         name.setBorder(new EmptyBorder(1,0,1,5));
         Font nameFont = new Font("Helvetica Neue", Font.BOLD, 18);
         name.setFont(nameFont);
+        name.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        name.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                //TODO:getPresenter().onUserClick(user);
+            }
+        });
         names.add(name);
 
         JLabel usernameLabel = new JLabel("@"+ username);
         usernameLabel.setForeground(new Color(95, 95, 95));
+        usernameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        usernameLabel.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                //TODO:getPresenter().onUserClick(user);
+            }
+        });
         names.add(usernameLabel);
 
         // Add the name and username at east.

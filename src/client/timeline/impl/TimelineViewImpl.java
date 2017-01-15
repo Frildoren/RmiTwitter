@@ -66,11 +66,13 @@ public class TimelineViewImpl extends BaseView<TimelinePresenter> implements Tim
         tweetButton.addActionListener(e -> {
             getPresenter().sendTweet(tweetZone.getText().trim());
             tweetZone.setText("¿Qué está pasando?");
+            sendTweet.requestFocusInWindow();
         });
 
         tweetZone.addActionListener(e -> {
             getPresenter().sendTweet(tweetZone.getText().trim());
             tweetZone.setText("¿Qué está pasando?");
+            sendTweet.requestFocusInWindow();
         });
 
 
