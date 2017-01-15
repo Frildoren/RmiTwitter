@@ -2,6 +2,7 @@ package client.base.impl;
 
 import client.Client;
 import client.base.FrameView;
+import client.base.ParentPresenter;
 import client.base.Presenter;
 import client.base.View;
 
@@ -30,6 +31,7 @@ public abstract class BasePresenter<V extends View> implements Presenter<V> {
 
 
     V view;
+    ParentPresenter parentPresenter;
     Client client;
 
     @Override
@@ -53,6 +55,14 @@ public abstract class BasePresenter<V extends View> implements Presenter<V> {
 
     public Client getClient() {
         return client;
+    }
+
+    public ParentPresenter getParentPresenter() {
+        return parentPresenter;
+    }
+
+    public void setParentPresenter(ParentPresenter parentPresenter) {
+        this.parentPresenter = parentPresenter;
     }
 
     public void finish(){
