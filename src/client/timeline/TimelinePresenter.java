@@ -1,8 +1,8 @@
 package client.timeline;
 
 
-import client.base.impl.BasePresenter;
+import client.base.Presenter;
 
-public interface TimelinePresenter extends BasePresenter<TimelineView> implements TimelinePresenter {
+public interface TimelinePresenter extends Presenter<TimelineView> {
 
 }

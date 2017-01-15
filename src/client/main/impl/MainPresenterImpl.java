@@ -5,6 +5,8 @@ import client.base.impl.BasePresenter;
 import client.login.impl.LoginPresenterImpl;
 import client.main.MainPresenter;
 import client.main.MainView;
+import client.timeline.TimelinePresenter;
+import client.timeline.impl.TimelinePresenterImpl;
 
 import java.rmi.RemoteException;
 
@@ -26,6 +28,9 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
             getView().setUserNick(getClient().getUser().getNick());
             getView().setUserTweets(getClient().getUser().getTweets().size());
             getView().setUserFollowing(getClient().getUser().getFollowing().size());
+
+            TimelinePresenter timelinePresenter = createPresenter(TimelinePresenterImpl.class);
+            getView().setNestedView(timelinePresenter.getView());
 
         } catch (RemoteException e) {
             e.printStackTrace();

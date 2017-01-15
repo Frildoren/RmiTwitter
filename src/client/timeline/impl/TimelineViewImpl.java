@@ -1,8 +1,10 @@
 package client.timeline.impl;
 
 
+import client.base.View;
 import client.base.impl.BaseView;
 import client.timeline.TimelinePresenter;
+import client.timeline.TimelineView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,10 +15,11 @@ import java.io.IOException;
 
 public class TimelineViewImpl extends BaseView<TimelinePresenter> implements TimelineView {
 
+    private JPanel tweetsPanel = new JPanel();
+
     @Override
     protected void initializePanel(JPanel panel) {
 
-        panel = new JPanel();
         panel.setBackground(new Color(192, 222, 237));
         panel.setLayout(new BorderLayout());
 
@@ -50,6 +53,13 @@ public class TimelineViewImpl extends BaseView<TimelinePresenter> implements Tim
         tweetButton.setBorderPainted(false);
         tweetButton.setForeground(Color.WHITE);
         sendTweet.add(tweetButton,BorderLayout.EAST);
+
+        tweetsPanel.setLayout(new BoxLayout(tweetsPanel,BoxLayout.Y_AXIS));
+        tweetsPanel.setBackground(new Color(192, 222, 237));
+        tweetsPanel.setBorder(new EmptyBorder(5, 5, 10, 5));
+
+        panel.add(sendTweet,BorderLayout.NORTH);
+        panel.add(tweetsPanel,BorderLayout.CENTER);
 
     }
 
@@ -99,4 +109,12 @@ public class TimelineViewImpl extends BaseView<TimelinePresenter> implements Tim
 
     }
 
+    @Override
+    public void setNestedView(View view) {
+        if(tweetsPanel != null) {
+            tweetsPanel.removeAll();
+            tweetsPanel.add(view.getPanel());
+            getPanel().updateUI();
+        }
+    }
 }

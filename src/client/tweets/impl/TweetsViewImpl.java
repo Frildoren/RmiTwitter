@@ -16,16 +16,18 @@ import java.util.Date;
 import java.util.List;
 
 public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsView {
-    
+
+    private JPanel mainPanel;
+
     @Override
     protected void initializePanel(JPanel panel) {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(new Color(192, 222, 237));
 
-        JScrollPane tweetsTimeLine = new JScrollPane(panel);
-        tweetsTimeLine.setBorder(new EmptyBorder(5, 5, 10, 5));
-        tweetsTimeLine.setBackground(new Color(192, 222, 237));
-        tweetsTimeLine.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBackground(new Color(192, 222, 237));
+
     }
 
     @Override
@@ -33,13 +35,21 @@ public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsV
         getPanel().removeAll();
         tweets.forEach(tweet -> {
             try {
-                getPanel().add(generateTweet(tweet.getUser().getNick(),tweet.getUser().getName(),"res/defaultprofile.png",tweet.getDate(),tweet.getTweet()),0);
+                mainPanel.add(generateTweet(tweet.getUser().getNick(),tweet.getUser().getName(),"res/defaultprofile.png",tweet.getDate(),tweet.getTweet()),0);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         });
 
+        JScrollPane tweetsTimeLine = new JScrollPane(mainPanel);
+        tweetsTimeLine.setBorder(new EmptyBorder(5, 5, 10, 5));
+        tweetsTimeLine.setBackground(new Color(192, 222, 237));
+        tweetsTimeLine.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        
+        getPanel().add(tweetsTimeLine);
     }
+
 
     // Method to generate a tweet.
     private JPanel generateTweet(String username, String user, String picURL, Date date, String tweet){
@@ -47,6 +57,7 @@ public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsV
         Boolean replyed = false;
         final Boolean[] retweeted = {false};
         final Boolean[] liked = {false};
+
 
         JPanel tweetpanel = new JPanel();
         tweetpanel.setLayout(new BorderLayout());
@@ -83,14 +94,12 @@ public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsV
         fullName.setFont(nameFont);
 
 
-        JLabel userName = new JLabel("@"+username+" · 5h");
+        JLabel userName = new JLabel("@"+username+" · "+date.toString());
         userName.setBackground(Color.WHITE);
         userName.setForeground(new Color(95, 95, 95));
 
         nameAndUsername.add(fullName);
         nameAndUsername.add(userName);
-
-
 
         JPanel tweetInfo = new JPanel();
         tweetInfo.setLayout(new BorderLayout());
@@ -230,7 +239,6 @@ public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsV
         tweetpanel.add(infoAndTweet,BorderLayout.CENTER);
 
         tweetpanel.add(interactions,BorderLayout.SOUTH);
-        tweetpanel.setPreferredSize(new Dimension(Integer.MAX_VALUE,110));
         tweetpanel.setMaximumSize(new Dimension(Integer.MAX_VALUE,110));
         tweetpanel.setBorder(new EmptyBorder(0, 0, 10, 5));
 
