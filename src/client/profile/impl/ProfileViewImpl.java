@@ -12,16 +12,17 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.List;
 
 public class ProfileViewImpl extends BaseView<ProfilePresenter> implements ProfileView{
 
     private JPanel mainPanel;
     private User myUser;
+
+    private JButton unfollowButton;
+    private JButton followButton;
+    private JButton messageButton;
 
     @Override
     protected void initializePanel(JPanel panel) {
@@ -41,6 +42,21 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void setFollowVisible(boolean visible){
+        followButton.setVisible(visible);
+    }
+
+    @Override
+    public void setUnfollowVisible(boolean visible){
+        unfollowButton.setVisible(visible);
+    }
+
+    @Override
+    public void setMessageVisible(boolean visible){
+        messageButton.setVisible(visible);
     }
 
     // Method to generate the Profile
@@ -92,28 +108,37 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
         buttonsPanel.setBackground(Color.WHITE);
 
         // Display buttons.
-        JButton followButton;
         followButton = generateImageButton("res/person_icon_black.png",15,15,"Seguir ");
         followButton.setBackground(new Color(7, 112, 180));
         followButton.setOpaque(true);
         followButton.setBorderPainted(false);
         followButton.setForeground(Color.WHITE);
         followButton.addActionListener(e -> {
-            //TODO:getPresenter().onFollowing(user);
+            getPresenter().onUserFollow(user);
+        });
+
+
+        unfollowButton = generateImageButton("res/person_icon_black.png",15,15,"Dejar de eguir ");
+        unfollowButton.setBackground(new Color(7, 112, 180));
+        unfollowButton.setOpaque(true);
+        unfollowButton.setBorderPainted(false);
+        unfollowButton.setForeground(Color.WHITE);
+        unfollowButton.addActionListener(e -> {
+            getPresenter().onUserUnfollow(user);
         });
 
         // Display buttons.
-        JButton messageButton;
         messageButton = generateImageButton("res/person_icon_black.png",15,15,"Mensaje Privado ");
         messageButton.setBackground(new Color(7, 112, 180));
         messageButton.setOpaque(true);
         messageButton.setBorderPainted(false);
         messageButton.setForeground(Color.WHITE);
         messageButton.addActionListener(e -> {
-            //TODO:getPresenter().onMessaging(user);
+            getPresenter().sendMessage(user);
         });
 
         buttonsPanel.add(followButton);
+        buttonsPanel.add(unfollowButton);
         buttonsPanel.add(messageButton);
         profilePanel.setMaximumSize(new Dimension(100,50));
 

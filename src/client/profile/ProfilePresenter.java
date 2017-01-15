@@ -10,6 +10,9 @@ public interface ProfilePresenter extends Presenter<ProfileView> {
 
     void setUser(User user);
 
-    void onUserFollowing(User user);
+    void onUserFollow(User user);
 
+    void onUserUnfollow(User user);
+
+    void sendMessage(User user);
 }

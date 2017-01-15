@@ -9,4 +9,10 @@ import java.util.List;
 public interface ProfileView extends View<ProfilePresenter>{
 
     void setUser(User user);
+
+    void setFollowVisible(boolean visible);
+
+    void setUnfollowVisible(boolean visible);
+
+    void setMessageVisible(boolean visible);
 }
