@@ -33,4 +33,10 @@ public interface User extends Remote {
     void unfollow(User user) throws RemoteException;
 
     boolean isFollowing(User user) throws RemoteException;
+
+    List<Tweet> getMessages() throws RemoteException;
+
+    void addMessage(Tweet message) throws RemoteException;
+
+    void setMessages(List<Tweet> messages) throws RemoteException;
 }
