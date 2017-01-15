@@ -57,6 +57,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
         PeoplePresenter peoplePresenter = createPresenter(PeoplePresenterImpl.class);
         peoplePresenter.setUserList(users);
+        peoplePresenter.setTitle("Búsqueda");
         setNestedView(peoplePresenter.getView());
 
     }
