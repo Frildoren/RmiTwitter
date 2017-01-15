@@ -1,5 +1,6 @@
 package common;
 
+import common.models.Tweet;
 import common.models.User;
 
 import java.rmi.Remote;
@@ -13,4 +14,6 @@ public interface UserManager extends Remote {
     boolean disconnect(String nick) throws RemoteException;
 
     List<User> search(String search) throws RemoteException;
+
+    void sendMessage(User dest, Tweet message) throws RemoteException;
 }
