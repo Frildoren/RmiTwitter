@@ -42,17 +42,25 @@ public class TimelinePresenterImpl extends BasePresenter<TimelineView> implement
 
     @Override
     public void sendTweet(String tweet) {
-        Tweet t = new Tweet();
-        t.setUser(getClient().getUser());
-        t.setDate(new Date(System.currentTimeMillis()));
-        t.setTweet(tweet);
 
-        try {
-            getClient().getUser().addTweet(t);
-            showTimeline();
-        } catch (RemoteException e) {
-            getView().showError("Error sending tweet");
-            e.printStackTrace();
+        if (tweet.length() <= 140){
+
+            Tweet t = new Tweet();
+            t.setUser(getClient().getUser());
+            t.setDate(new Date(System.currentTimeMillis()));
+            t.setTweet(tweet);
+
+            try {
+                getClient().getUser().addTweet(t);
+                showTimeline();
+            } catch (RemoteException e) {
+                getView().showError("Error sending tweet");
+                e.printStackTrace();
+            }
+
+        }else{
+            getView().showError("Tweet exceeds the limit 140 chars.");
         }
+
     }
 }
