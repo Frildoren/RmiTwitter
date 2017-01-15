@@ -23,7 +23,6 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements 
     @Override
     public void setUser(User user) {
         getView().setUser(user);
-<<<<<<< HEAD
 
         try {
             TweetsPresenter tweetsPresenter = createPresenter(TweetsPresenterImpl.class);
@@ -32,7 +31,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements 
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-=======
+
         updateFollowing(user);
     }
 
@@ -61,7 +60,6 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements 
             getView().showError("Connection error");
             e.printStackTrace();
         }
->>>>>>> 406d0afdf2eaa214cf5b99584ca3d547cab9f65f
     }
 
     @Override
