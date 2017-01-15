@@ -8,6 +8,8 @@ import client.main.MainPresenter;
 import client.main.MainView;
 import client.people.PeoplePresenter;
 import client.people.impl.PeoplePresenterImpl;
+import client.profile.ProfilePresenter;
+import client.profile.impl.ProfilePresenterImpl;
 import client.timeline.TimelinePresenter;
 import client.timeline.impl.TimelinePresenterImpl;
 import common.models.User;
@@ -96,6 +98,13 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
             getView().showError("Connection error");
         }
 
+    }
+
+    @Override
+    public void onUserClick(){
+        ProfilePresenter profilePresenter = createPresenter(ProfilePresenterImpl.class);
+        profilePresenter.setUser(getClient().getUser());
+        setNestedView(profilePresenter.getView());
     }
 
     @Override
