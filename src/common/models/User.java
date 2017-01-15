@@ -39,4 +39,6 @@ public interface User extends Remote {
     void addMessage(Tweet message) throws RemoteException;
 
     void setMessages(List<Tweet> messages) throws RemoteException;
+
+    List<Tweet> getTimeline() throws RemoteException;
 }

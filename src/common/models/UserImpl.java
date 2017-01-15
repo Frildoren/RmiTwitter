@@ -2,8 +2,7 @@ package common.models;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class UserImpl extends UnicastRemoteObject implements User {
 
@@ -109,6 +108,21 @@ public class UserImpl extends UnicastRemoteObject implements User {
     @Override
     public void setMessages(List<Tweet> messages) throws RemoteException {
         this.messages = messages;
+    }
+
+    @Override
+    public List<Tweet> getTimeline() throws RemoteException {
+        Map<Date, Tweet> tweetMap = new TreeMap<>();
+        getTweets().forEach(tweet -> tweetMap.put(tweet.getDate(), tweet));
+        getFollowing().forEach(user -> {
+            try {
+                user.getTweets().forEach(tweet -> tweetMap.put(tweet.getDate(), tweet));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+
+        return new ArrayList<>(tweetMap.values());
     }
 
 }

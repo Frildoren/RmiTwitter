@@ -242,7 +242,7 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         {
             public void mouseClicked(MouseEvent e)
             {
-                //TODO:getPresenter().onUserClick(user);
+                getPresenter().onUserClick();
             }
         });
         names.add(name);
@@ -254,7 +254,7 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         {
             public void mouseClicked(MouseEvent e)
             {
-                //TODO:getPresenter().onUserClick(user);
+                getPresenter().onUserClick();
             }
         });
         names.add(usernameLabel);

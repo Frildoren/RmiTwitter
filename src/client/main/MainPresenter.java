@@ -7,5 +7,5 @@ public interface MainPresenter extends ParentPresenter<MainView> {
     void onSearch(String search);
     void onFollowingClick();
     void onDisconnect();
-
+    void onUserClick();
 }
