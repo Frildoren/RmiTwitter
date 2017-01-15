@@ -8,8 +8,9 @@ import client.tweets.TweetsPresenter;
 import client.tweets.impl.TweetsPresenterImpl;
 import common.models.Tweet;
 
-import java.util.Arrays;
+import java.rmi.RemoteException;
 import java.util.Date;
+import java.util.List;
 
 public class TimelinePresenterImpl extends BasePresenter<TimelineView> implements TimelinePresenter {
     @Override
@@ -22,41 +23,36 @@ public class TimelinePresenterImpl extends BasePresenter<TimelineView> implement
     @Override
     public void initialize(Client client) {
         super.initialize(client);
+        showTimeline();
+    }
 
-        Tweet a = new Tweet();
-        a.setDate(new Date(System.currentTimeMillis()));
-        a.setTweet("Timeline1");
-        a.setUser(getClient().getUser());
-        Tweet b = new Tweet();
-        b.setDate(new Date(System.currentTimeMillis()));
-        b.setTweet("tweeep2");
-        b.setUser(getClient().getUser());
+    private void showTimeline(){
+        try {
+            List<Tweet> list = getClient().getUser().getTweets();
+            TweetsPresenter tweetsPresenter = createPresenter(TweetsPresenterImpl.class);
+            tweetsPresenter.setTweets(list);
 
-        Tweet c = new Tweet();
-        c.setDate(new Date(System.currentTimeMillis()));
-        c.setTweet("Timeline3");
-        c.setUser(getClient().getUser());
-        Tweet d = new Tweet();
-        d.setDate(new Date(System.currentTimeMillis()));
-        d.setTweet("tweeep4");
-        d.setUser(getClient().getUser());
+            getView().setNestedView(tweetsPresenter.getView());
+        } catch (RemoteException e) {
+            getView().showError("Could not load timeline");
+            e.printStackTrace();
+        }
 
-        Tweet e = new Tweet();
-        e.setDate(new Date(System.currentTimeMillis()));
-        e.setTweet("Timeline5");
-        e.setUser(getClient().getUser());
-        Tweet f = new Tweet();
-        f.setDate(new Date(System.currentTimeMillis()));
-        f.setTweet("tweeep6");
-        f.setUser(getClient().getUser());
-        Tweet g = new Tweet();
-        g.setDate(new Date(System.currentTimeMillis()));
-        g.setTweet("tweeep7");
-        g.setUser(getClient().getUser());
+    }
 
-        TweetsPresenter tweetsPresenter = createPresenter(TweetsPresenterImpl.class);
-        tweetsPresenter.setTweets(Arrays.asList(new Tweet[]{a,b,c,d,f,g}));
+    @Override
+    public void sendTweet(String tweet) {
+        Tweet t = new Tweet();
+        t.setUser(getClient().getUser());
+        t.setDate(new Date(System.currentTimeMillis()));
+        t.setTweet(tweet);
 
-        getView().setNestedView(tweetsPresenter.getView());
+        try {
+            getClient().getUser().addTweet(t);
+            showTimeline();
+        } catch (RemoteException e) {
+            getView().showError("Error sending tweet");
+            e.printStackTrace();
+        }
     }
 }

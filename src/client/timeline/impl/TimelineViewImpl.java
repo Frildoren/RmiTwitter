@@ -42,6 +42,9 @@ public class TimelineViewImpl extends BaseView<TimelinePresenter> implements Tim
 
         JTextField tweetZone = new JTextField("¿Qué está pasando?",140);
         tweetZone.setBorder(new EmptyBorder(0, 5, 0, 10));
+        tweetZone.addActionListener(e -> {
+            tweetZone.setText(" ");
+        });
 
         tweetZone.setBackground(Color.WHITE);
         sendTweet.add(tweetZone,BorderLayout.CENTER);
@@ -52,7 +55,16 @@ public class TimelineViewImpl extends BaseView<TimelinePresenter> implements Tim
         tweetButton.setOpaque(true);
         tweetButton.setBorderPainted(false);
         tweetButton.setForeground(Color.WHITE);
+        tweetButton.addActionListener(e -> {
+            getPresenter().sendTweet(tweetZone.getText());
+        });
+
+
         sendTweet.add(tweetButton,BorderLayout.EAST);
+
+
+
+
 
         tweetsPanel.setLayout(new BoxLayout(tweetsPanel,BoxLayout.Y_AXIS));
         tweetsPanel.setBackground(new Color(192, 222, 237));

@@ -46,7 +46,7 @@ public class TweetsViewImpl extends BaseView<TweetsPresenter> implements TweetsV
         tweetsTimeLine.setBackground(new Color(192, 222, 237));
         tweetsTimeLine.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        
+
         getPanel().add(tweetsTimeLine);
     }
 
