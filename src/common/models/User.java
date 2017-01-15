@@ -20,6 +20,8 @@ public interface User extends Remote {
 
     List<Tweet> getTweets() throws RemoteException;
 
+    void addTweet(Tweet tweet) throws RemoteException;
+
     void setTweets(List<Tweet> tweets) throws RemoteException;
 
     List<User> getFollowing() throws RemoteException;

@@ -55,6 +55,11 @@ public class UserImpl extends UnicastRemoteObject implements User {
     }
 
     @Override
+    public void addTweet(Tweet tweet) throws RemoteException {
+        getTweets().add(tweet);
+    }
+
+    @Override
     public void setTweets(List<Tweet> tweets) throws RemoteException {
         this.tweets = tweets;
     }
