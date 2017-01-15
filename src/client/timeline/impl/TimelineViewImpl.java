@@ -49,7 +49,10 @@ public class TimelineViewImpl extends BaseView<TimelinePresenter> implements Tim
             public void mouseClicked(MouseEvent e){
                 tweetZone.setText("");
             }
+
         });
+
+
 
         tweetZone.setBackground(Color.WHITE);
         sendTweet.add(tweetZone,BorderLayout.CENTER);
@@ -61,7 +64,13 @@ public class TimelineViewImpl extends BaseView<TimelinePresenter> implements Tim
         tweetButton.setBorderPainted(false);
         tweetButton.setForeground(Color.WHITE);
         tweetButton.addActionListener(e -> {
-            getPresenter().sendTweet(tweetZone.getText());
+            getPresenter().sendTweet(tweetZone.getText().trim());
+            tweetZone.setText("¿Qué está pasando?");
+        });
+
+        tweetZone.addActionListener(e -> {
+            getPresenter().sendTweet(tweetZone.getText().trim());
+            tweetZone.setText("¿Qué está pasando?");
         });
 
 

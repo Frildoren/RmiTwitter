@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -138,6 +140,8 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
             }
         });
 
+
+
         tweetAndPhotoPanel.add(searchBox);
 
 
@@ -147,7 +151,17 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         searchButton.setOpaque(true);
         searchButton.setBorderPainted(false);
         searchButton.setForeground(Color.WHITE);
+        searchButton.addActionListener(e -> {
+            //getPresenter().onSearch(searchBox.getText().trim());
+        });
+
+        searchBox.addActionListener(e -> {
+            //getPresenter().onSearch(searchBox.getText().trim());
+
+        });
+
         tweetAndPhotoPanel.add(searchButton);
+
 
 
         JLabel profilePhoto;

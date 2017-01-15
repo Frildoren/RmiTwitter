@@ -124,6 +124,10 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
         password.setPreferredSize(new Dimension(800,30));
         password.setMaximumSize(new Dimension(800,30));
 
+        password.addActionListener(e -> {
+            getPresenter().onLogin();
+        });
+
         JLabel passwordTip = new JLabel("Contraseña:");
         passwordTip.setAlignmentX(Component.CENTER_ALIGNMENT);
 
