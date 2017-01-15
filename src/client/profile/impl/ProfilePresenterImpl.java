@@ -10,12 +10,14 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements 
 
     @Override
     protected ProfileView createView() {
-        return null;
+        ProfileView profileView = new ProfileViewImpl();
+        profileView.create(this);
+        return profileView;
     }
 
     @Override
     public void setUser(User user) {
-
+        
     }
 
     @Override
