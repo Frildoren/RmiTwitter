@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface ProfileView extends View<ProfilePresenter>{
 
-    void setTitle(String title);
-
-    void setUserList(List<User> userList);
+    void setUser(User user);
 }

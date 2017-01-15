@@ -37,7 +37,6 @@ public class PeopleViewImpl extends BaseView<PeoplePresenter> implements PeopleV
         mainPanel.setBackground(new Color(192, 222, 237));
 
         titleLabel = new JLabel();
-        panel.add(titleLabel);
 
     }
 
@@ -45,12 +44,14 @@ public class PeopleViewImpl extends BaseView<PeoplePresenter> implements PeopleV
     public void setUserList(List<User> userList) {
 
         getPanel().removeAll();
+        getPanel().add(titleLabel);
+
         userList.forEach(user -> {
             mainPanel.add(generteProfile(user));
         });
 
         JScrollPane profilesResults = new JScrollPane(mainPanel);
-        profilesResults.setBorder(new EmptyBorder(5, 5, 10, 5));
+        profilesResults.setBorder(new EmptyBorder(5, 5, 5, 5));
         profilesResults.setBackground(new Color(192, 222, 237));
         profilesResults.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 

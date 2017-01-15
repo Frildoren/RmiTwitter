@@ -21,17 +21,7 @@ import java.util.List;
 public class ProfileViewImpl extends BaseView<ProfilePresenter> implements ProfileView{
 
     private JPanel mainPanel;
-    private JLabel titleLabel;
-
-    @Override
-    public void setTitle(String title) {
-        titleLabel.setText(title);
-    }
-
-    @Override
-    public void setUserList(List<User> userList) {
-
-    }
+    private User myUser;
 
     @Override
     protected void initializePanel(JPanel panel) {
@@ -41,14 +31,20 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBackground(new Color(192, 222, 237));
+    }
 
-        titleLabel = new JLabel();
-        panel.add(titleLabel);
-
+    @Override
+    public void setUser(User user) {
+        myUser = user;
+        try {
+            getPanel().add(generteProfile(myUser));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     // Method to generate the Profile
-    private JPanel generteProfile(User user){
+    private JPanel generteProfile(User user) throws RemoteException {
 
         // Panel for the profile.
         JPanel profilePanel = new JPanel();
@@ -75,12 +71,9 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
         names.setBackground(Color.white);
         names.setLayout(new BoxLayout(names,BoxLayout.Y_AXIS));
 
-        JLabel name = null;
-        try {
-            name = new JLabel(user.getName());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        JLabel name = new JLabel(user.getName());
+
+
         name.setBorder(new EmptyBorder(1,0,1,5));
         Font nameFont = new Font("Helvetica Neue", Font.BOLD, 18);
         name.setFont(nameFont);
@@ -88,42 +81,51 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
 
         names.add(name);
 
-        JLabel usernameLabel = null;
-        try {
-            usernameLabel = new JLabel("@"+ user.getNick());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        JLabel usernameLabel = new JLabel("@"+ user.getNick());
+
         usernameLabel.setForeground(new Color(95, 95, 95));
         usernameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         names.add(usernameLabel);
 
-        // Add the name and username at east.
-        usernames.add(names,BorderLayout.CENTER);
-
-
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel,BoxLayout.X_AXIS));
+        buttonsPanel.setBackground(Color.WHITE);
 
         // Display buttons.
-
         JButton followButton;
         followButton = generateImageButton("res/person_icon_black.png",15,15,"Seguir ");
-        followButton.setBackground(new Color(255, 255, 255));
+        followButton.setBackground(new Color(7, 112, 180));
         followButton.setOpaque(true);
         followButton.setBorderPainted(false);
-        followButton.setForeground(Color.BLACK);
+        followButton.setForeground(Color.WHITE);
         followButton.addActionListener(e -> {
             //TODO:getPresenter().onFollowing(user);
         });
 
+        // Display buttons.
+        JButton messageButton;
+        messageButton = generateImageButton("res/person_icon_black.png",15,15,"Mensaje Privado ");
+        messageButton.setBackground(new Color(7, 112, 180));
+        messageButton.setOpaque(true);
+        messageButton.setBorderPainted(false);
+        messageButton.setForeground(Color.WHITE);
+        messageButton.addActionListener(e -> {
+            //TODO:getPresenter().onMessaging(user);
+        });
+
         buttonsPanel.add(followButton);
+        buttonsPanel.add(messageButton);
+        profilePanel.setMaximumSize(new Dimension(100,50));
+
+        usernames.add(buttonsPanel,BorderLayout.SOUTH);
+
+
+        // Add the name and username at east.
+        usernames.add(names,BorderLayout.CENTER);
 
         profilePanel.add(usernames);
-        profilePanel.add(buttonsPanel);
 
-        profilePanel.setPreferredSize(new Dimension(270,130));
-        profilePanel.setMaximumSize(new Dimension(400,130));
+        profilePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE,150));
 
         return profilePanel;
     }
@@ -173,5 +175,4 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
 
 
     }
-
 }

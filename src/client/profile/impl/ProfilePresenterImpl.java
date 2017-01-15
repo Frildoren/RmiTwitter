@@ -17,7 +17,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements 
 
     @Override
     public void setUser(User user) {
-        
+        getView().setUser(user);
     }
 
     @Override
