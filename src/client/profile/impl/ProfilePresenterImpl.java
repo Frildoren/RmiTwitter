@@ -7,9 +7,17 @@ import client.profile.ProfileView;
 import common.models.User;
 
 public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements ProfilePresenter {
-    @Override
-    public void setTitle(String title) {
 
+    @Override
+    protected ProfileView createView() {
+        ProfileView profileView = new ProfileViewImpl();
+        profileView.create(this);
+        return profileView;
+    }
+
+    @Override
+    public void setUser(User user) {
+        
     }
 
     @Override
@@ -17,8 +25,5 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements 
 
     }
 
-    @Override
-    protected ProfileView createView() {
-        return null;
-    }
+
 }

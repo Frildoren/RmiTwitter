@@ -43,7 +43,12 @@ public abstract class BasePresenter<V extends View> implements Presenter<V> {
     }
 
     public <P extends BasePresenter> P createPresenter(Class<P> clazz){
-        return BasePresenter.createPresenter(getClient(), clazz);
+        P presenter = BasePresenter.createPresenter(getClient(), clazz);
+        if(this instanceof ParentPresenter) {
+            presenter.setParentPresenter((ParentPresenter) this);
+        }
+        
+        return presenter;
     }
 
     protected abstract V createView();
