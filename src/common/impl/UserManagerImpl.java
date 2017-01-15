@@ -43,6 +43,7 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
             user.setPassword(password);
 
             usersRegistered.put(nick, user);
+            usersConnected.put(nick, user);
         }
 
         return user;
