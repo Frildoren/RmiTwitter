@@ -1,5 +1,6 @@
 package client.main.impl;
 
+import client.Client;
 import client.base.impl.BasePresenter;
 import client.login.impl.LoginPresenterImpl;
 import client.main.MainPresenter;
@@ -13,17 +14,22 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     protected MainView createView() {
         MainViewImpl mainView = new MainViewImpl();
         mainView.create(this);
+        return mainView;
+    }
+
+    @Override
+    public void initialize(Client client) {
+        super.initialize(client);
 
         try {
-            mainView.setUserName(getClient().getUser().getName());
-            mainView.setUserNick(getClient().getUser().getNick());
-            mainView.setUserTweets(getClient().getUser().getTweets().size());
-            mainView.setUserFollowing(getClient().getUser().getFollowing().size());
+            getView().setUserName(getClient().getUser().getName());
+            getView().setUserNick(getClient().getUser().getNick());
+            getView().setUserTweets(getClient().getUser().getTweets().size());
+            getView().setUserFollowing(getClient().getUser().getFollowing().size());
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
-        return mainView;
     }
 
     @Override
