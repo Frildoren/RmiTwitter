@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProfilePresenter extends Presenter<ProfileView> {
 
-    void setTitle(String title);
+    void setUser(User user);
 
     void onUserFollowing(User user);
 
