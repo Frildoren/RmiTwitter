@@ -20,14 +20,15 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
     @Override
     public User connect(String nick, String password) throws RemoteException {
 
-        User user = null;
+        User user = usersRegistered.get(nick);
 
-        if((user=usersRegistered.get(nick)) != null) {
-            if(user.getPassword().equals(password))
-                usersConnected.put(nick, user);
+        if(user != null && user.getPassword().equals(password)) {
+            usersConnected.put(nick, user);
+            return user;
+        } else {
+            return null;
         }
 
-        return user;
     }
 
     @Override
