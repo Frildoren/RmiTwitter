@@ -3,6 +3,8 @@ package client.people.impl;
 import client.base.impl.BasePresenter;
 import client.people.PeoplePresenter;
 import client.people.PeopleView;
+import client.profile.ProfilePresenter;
+import client.profile.impl.ProfilePresenterImpl;
 import common.models.User;
 
 import java.util.List;
@@ -28,7 +30,9 @@ public class PeoplePresenterImpl extends BasePresenter<PeopleView> implements Pe
 
     @Override
     public void onUserClick(User user){
-        
+        ProfilePresenter profilePresenter = new ProfilePresenterImpl();
+        profilePresenter.setUser(user);
+        getParentPresenter().setNestedView(profilePresenter.getView());
     }
 
 }
