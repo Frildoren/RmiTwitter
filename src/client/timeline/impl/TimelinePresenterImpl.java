@@ -1,6 +1,7 @@
 package client.timeline.impl;
 
 import client.Client;
+import client.base.View;
 import client.base.impl.BasePresenter;
 import client.timeline.TimelinePresenter;
 import client.timeline.TimelineView;
@@ -30,6 +31,7 @@ public class TimelinePresenterImpl extends BasePresenter<TimelineView> implement
         try {
             List<Tweet> list = getClient().getUser().getTweets();
             TweetsPresenter tweetsPresenter = createPresenter(TweetsPresenterImpl.class);
+            tweetsPresenter.setParentPresenter(this);
             tweetsPresenter.setTweets(list);
 
             getView().setNestedView(tweetsPresenter.getView());
@@ -62,5 +64,10 @@ public class TimelinePresenterImpl extends BasePresenter<TimelineView> implement
             getView().showError("Tweet exceeds the limit 140 chars or is empty.");
         }
 
+    }
+
+    @Override
+    public void setNestedView(View view) {
+        getView().setNestedView(view);
     }
 }

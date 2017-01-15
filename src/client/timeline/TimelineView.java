@@ -1,9 +1,7 @@
 package client.timeline;
 
-import client.base.View;
+import client.base.ParentView;
 
-public interface TimelineView extends View<TimelinePresenter>{
-
-    void setNestedView(View view);
+public interface TimelineView extends ParentView<TimelinePresenter> {
 
 }
