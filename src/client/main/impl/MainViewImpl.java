@@ -20,7 +20,8 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
     private int numberTweets;
     private int numberFollowing;
 
-    JPanel centerzone;
+    private JPanel centerZone;
+    private View nestedView;
 
 
     @Override
@@ -45,13 +46,12 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
 
     @Override
     public void setNestedView(View view) {
-
-        centerzone.removeAll();
-        centerzone = view.getPanel();
-        centerzone.setBackground(new Color(192, 222, 237));
-        centerzone.setLayout(new BorderLayout());
-        centerzone.updateUI();
-
+        nestedView = view;
+        if(centerZone != null) {
+            centerZone.removeAll();
+            centerZone.add(view.getPanel());
+            getPanel().updateUI();
+        }
     }
 
     @Override
@@ -68,13 +68,15 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         panel.add(leftzone,BorderLayout.WEST);
 
 
-        centerzone = new JPanel();
-        centerzone.setBackground(new Color(192, 222, 237));
-        centerzone.setLayout(new BorderLayout());
-
+        centerZone = new JPanel();
+        centerZone.setBackground(new Color(192, 222, 237));
+        centerZone.setLayout(new BorderLayout());
+        if(nestedView != null){
+            setNestedView(nestedView);
+        }
 
         // Center
-        panel.add(centerzone);
+        panel.add(centerZone);
         panel.setBackground(new Color(192, 222, 237));
 
     }
