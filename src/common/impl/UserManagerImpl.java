@@ -61,7 +61,7 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
     }
 
     @Override
-    public List<User> search (String search) {
+    public List<User> search (String search) throws RemoteException {
 
         List<User> users = new ArrayList<>();
 

@@ -12,5 +12,5 @@ public interface UserManager extends Remote {
     User register(String nick, String name, String password) throws RemoteException;
     boolean disconnect(String nick) throws RemoteException;
 
-    List<User> search(String search);
+    List<User> search(String search) throws RemoteException;
 }
