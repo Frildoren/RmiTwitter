@@ -1,15 +1,12 @@
 package client.profile;
 
 
-import client.base.Presenter;
+import client.base.ParentPresenter;
 import common.models.User;
 
-import java.util.List;
-
-public interface ProfilePresenter extends Presenter<ProfileView> {
+public interface ProfilePresenter extends ParentPresenter<ProfileView> {
 
     void setUser(User user);
-
     void onUserFollowing(User user);
 
 }

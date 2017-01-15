@@ -1,6 +1,7 @@
 package client.profile.impl;
 
 
+import client.base.View;
 import client.base.impl.BaseView;
 import client.people.impl.PeopleViewImpl;
 import client.profile.ProfilePresenter;
@@ -22,6 +23,7 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
 
     private JPanel mainPanel;
     private User myUser;
+    private JPanel tweetsPanel = new JPanel();
 
     @Override
     protected void initializePanel(JPanel panel) {
@@ -31,6 +33,8 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBackground(new Color(192, 222, 237));
+
+
     }
 
     @Override
@@ -41,6 +45,7 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        getPanel().add(tweetsPanel);
     }
 
     // Method to generate the Profile
@@ -174,5 +179,14 @@ public class ProfileViewImpl extends BaseView<ProfilePresenter> implements Profi
         }
 
 
+    }
+
+    public void setNestedView(View view) {
+        tweetsPanel.setLayout(new BoxLayout(tweetsPanel,BoxLayout.Y_AXIS));
+        tweetsPanel.setBackground(new Color(192, 222, 237));
+        tweetsPanel.setBorder(new EmptyBorder(5, 5, 10, 5));
+        tweetsPanel.add(view.getPanel());
+        tweetsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
+        getPanel().updateUI();
     }
 }
