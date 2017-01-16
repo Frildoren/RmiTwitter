@@ -82,4 +82,20 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
         dest.addMessage(message);
 
     }
+
+    @Override
+    public void follow(User a, User b) throws RemoteException {
+        if(!a.isFollowing(b)) {
+            a.follow(b);
+            b.followed(a);
+        }
+    }
+
+    @Override
+    public void unfollow(User a, User b) throws RemoteException{
+        if(a.isFollowing(b)) {
+            a.unfollow(b);
+            b.unfollowed(a);
+        }
+    }
 }
