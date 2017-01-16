@@ -4,6 +4,8 @@ package client.messages.impl;
 import client.base.impl.BasePresenter;
 import client.messages.MessagesPresenter;
 import client.messages.MessagesView;
+import client.userMessages.UserMessagesPresenter;
+import client.userMessages.impl.UserMessagesPresenterImpl;
 import common.models.User;
 
 import java.util.List;
@@ -21,7 +23,9 @@ public class MessagesPresenterImpl extends BasePresenter<MessagesView> implement
 
     @Override
     public void onUserClick(User user) {
-        //TODO: usermessages
+        UserMessagesPresenter userMessagesPresenter = createPresenter(UserMessagesPresenterImpl.class);
+        userMessagesPresenter.setUser(user);
+        getParentPresenter().setNestedView(userMessagesPresenter.getView());
     }
 
     @Override
