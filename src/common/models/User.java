@@ -22,23 +22,23 @@ public interface User extends Remote {
 
     void addTweet(Tweet tweet) throws RemoteException;
 
-    void setTweets(List<Tweet> tweets) throws RemoteException;
-
     List<User> getFollowing() throws RemoteException;
 
-    void setFollowing(List<User> following) throws RemoteException;
+    List<User> getFollowers() throws RemoteException;
 
     void follow(User user) throws RemoteException;
 
+    void followed(User user) throws RemoteException;
+
     void unfollow(User user) throws RemoteException;
+
+    void unfollowed(User user) throws RemoteException;
 
     boolean isFollowing(User user) throws RemoteException;
 
     List<Tweet> getMessages() throws RemoteException;
 
     void addMessage(Tweet message) throws RemoteException;
-
-    void setMessages(List<Tweet> messages) throws RemoteException;
 
     List<Tweet> getTimeline() throws RemoteException;
 }
