@@ -7,6 +7,8 @@ import client.profile.ProfilePresenter;
 import client.profile.ProfileView;
 import client.tweets.TweetsPresenter;
 import client.tweets.impl.TweetsPresenterImpl;
+import client.userMessages.UserMessagesPresenter;
+import client.userMessages.impl.UserMessagesPresenterImpl;
 import common.models.User;
 
 import java.rmi.RemoteException;
@@ -75,7 +77,9 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements 
 
     @Override
     public void sendMessage(User user) {
-        getView().showError("Not implemented yet");
+        UserMessagesPresenter userMessagesPresenter = createPresenter(UserMessagesPresenterImpl.class);
+        userMessagesPresenter.setUser(user);
+        getParentPresenter().setNestedView(userMessagesPresenter.getView());
     }
 
     @Override

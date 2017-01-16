@@ -6,6 +6,6 @@ import common.models.User;
 
 public interface UserMessagesPresenter extends ParentPresenter<UserMessagesView> {
 
-    void sendMessage(User dest, String tweet);
+    void sendMessage(String tweet);
     void setUser(User user);
 }

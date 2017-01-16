@@ -16,6 +16,8 @@ import java.util.List;
 
 public class UserMessagesPresenterImpl extends BasePresenter<UserMessagesView> implements UserMessagesPresenter {
 
+    private User user;
+
     @Override
     protected UserMessagesView createView() {
         UserMessagesView userMessagesView = new UserMessagesViewImpl();
@@ -29,7 +31,7 @@ public class UserMessagesPresenterImpl extends BasePresenter<UserMessagesView> i
     }
 
     @Override
-    public void sendMessage(User dest, String tweet) {
+    public void sendMessage(String tweet) {
 
         Tweet t = new Tweet();
         t.setUser(getClient().getUser());
@@ -37,7 +39,8 @@ public class UserMessagesPresenterImpl extends BasePresenter<UserMessagesView> i
         t.setTweet(tweet);
 
         try {
-            getClient().getServer().getUserManager().sendMessage(dest,t);
+            getClient().getServer().getUserManager().sendMessage(user, t);
+            getClient().getServer().getUserManager().sendMessage(getClient().getUser(), t);
             showMessages();
         } catch (RemoteException e) {
             getView().showError("Error sending message");
@@ -48,12 +51,13 @@ public class UserMessagesPresenterImpl extends BasePresenter<UserMessagesView> i
 
     @Override
     public void setUser(User user) {
-
+        this.user = user;
     }
 
     private void showMessages(){
+
         try {
-            List<Tweet> list = getClient().getUser().getTimeline();
+            List<Tweet> list = getClient().getUser().getConversation(getClient().getUser());
             TweetsPresenter tweetsPresenter = createPresenter(TweetsPresenterImpl.class);
             tweetsPresenter.setParentPresenter(this);
             tweetsPresenter.setTweets(list);
