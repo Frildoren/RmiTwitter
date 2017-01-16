@@ -13,13 +13,13 @@ public class UserImpl extends UnicastRemoteObject implements User {
     private List<Tweet> tweets;
     private List<User> following;
     private List<User> followed;
-    private List<Tweet> messages;
+    private Map<User, List<Tweet>> messages;
 
     public UserImpl() throws RemoteException {
         tweets = new ArrayList<>();
         following = new ArrayList<>();
         followed = new ArrayList<>();
-        messages = new ArrayList<>();
+        messages = new HashMap<>();
     }
 
     @Override
@@ -98,13 +98,27 @@ public class UserImpl extends UnicastRemoteObject implements User {
     }
 
     @Override
-    public List<Tweet> getMessages() throws RemoteException {
+    public Map<User, List<Tweet>> getMessages() throws RemoteException {
         return messages;
     }
 
     @Override
-    public void addMessage(Tweet message) throws RemoteException {
-        getMessages().add(message);
+    public void addMessage(User user, Tweet message) throws RemoteException {
+
+        List<Tweet> messagesList = getMessages().get(user);
+
+        if(messagesList == null) {
+            messagesList = new ArrayList<>();
+            messages.put(user, messagesList);
+        }
+
+        messagesList.add(message);
+
+    }
+
+    @Override
+    public void setMessages(Map<User, List<Tweet>> messages) throws RemoteException {
+        this.messages = messages;
     }
 
     @Override
