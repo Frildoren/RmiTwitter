@@ -54,7 +54,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements 
     @Override
     public void onUserFollow(User user) {
         try {
-            getClient().getUser().follow(user);
+            getClient().getServer().getUserManager().follow(getClient().getUser(), user);
             updateFollowing(user);
         } catch (RemoteException e) {
             getView().showError("Connection error");
@@ -65,7 +65,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView> implements 
     @Override
     public void onUserUnfollow(User user) {
         try {
-            getClient().getUser().unfollow(user);
+            getClient().getServer().getUserManager().unfollow(getClient().getUser(), user);
             updateFollowing(user);
         } catch (RemoteException e) {
             getView().showError("Connection error");
