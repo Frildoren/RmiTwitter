@@ -93,6 +93,11 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     }
 
     @Override
+    public void onMessagesClick() {
+        //TODO Make the magic here.
+    }
+
+    @Override
     public void onDisconnect() {
 
         try {

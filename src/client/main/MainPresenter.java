@@ -8,6 +8,7 @@ public interface MainPresenter extends ParentPresenter<MainView> {
     void onFollowingClick();
 
     void onHomeClick();
+    void onMessagesClick();
 
     void onDisconnect();
     void onUserClick();

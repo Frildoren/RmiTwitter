@@ -148,6 +148,11 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
             getPresenter().onHomeClick();
         });
 
+        //Action listener for messages button
+        messagesButton.addActionListener(e -> {
+            getPresenter().onMessagesClick();
+        });
+
         JButton searchButton;
         searchButton = generateImageButton("res/search_icon_black.png",15,15,"Buscar ");
         searchButton.setBackground(new Color(192, 222, 237));
