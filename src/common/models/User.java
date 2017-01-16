@@ -1,5 +1,7 @@
 package common.models;
 
+import common.Callback;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -35,6 +37,8 @@ public interface User extends Remote {
 
     void unfollowed(User user) throws RemoteException;
 
+    void notifyCallback(String message) throws RemoteException;
+
     boolean isFollowing(User user) throws RemoteException;
 
     Map<User, List<Tweet>> getMessages() throws RemoteException;
@@ -44,4 +48,6 @@ public interface User extends Remote {
     void setMessages(Map<User, List<Tweet>> messages) throws RemoteException;
 
     List<Tweet> getTimeline() throws RemoteException;
+
+    void setNotificationCallback(Callback callback) throws RemoteException;
 }
