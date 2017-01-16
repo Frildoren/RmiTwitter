@@ -1,4 +1,7 @@
-package common.models;
+package common.impl;
+
+import common.models.Tweet;
+import common.models.User;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
