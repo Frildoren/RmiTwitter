@@ -6,6 +6,8 @@ import client.base.impl.BasePresenter;
 import client.login.impl.LoginPresenterImpl;
 import client.main.MainPresenter;
 import client.main.MainView;
+import client.messages.MessagesPresenter;
+import client.messages.impl.MessagesPresenterImpl;
 import client.people.PeoplePresenter;
 import client.people.impl.PeoplePresenterImpl;
 import client.profile.ProfilePresenter;
@@ -13,6 +15,7 @@ import client.profile.impl.ProfilePresenterImpl;
 import client.timeline.TimelinePresenter;
 import client.timeline.impl.TimelinePresenterImpl;
 import common.models.User;
+import sun.plugin2.message.Message;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -104,7 +107,20 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
     @Override
     public void onMessagesClick() {
-        //TODO Make the magic here.
+
+        List<User> messages = new ArrayList<>();
+
+        try {
+            messages.addAll(getClient().getUser().getMessages().keySet());
+        } catch (RemoteException e) {
+            getView().showError("Error showing private messages");
+            e.printStackTrace();
+        }
+
+        MessagesPresenter messagesPresenter = createPresenter(MessagesPresenterImpl.class);
+        messagesPresenter.setUserList(messages);
+        messagesPresenter.setTitle("Messages");
+        setNestedView(messagesPresenter.getView());
     }
 
     @Override
