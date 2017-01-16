@@ -16,4 +16,8 @@ public interface UserManager extends Remote {
     List<User> search(String search) throws RemoteException;
 
     void sendMessage(User dest, Tweet message) throws RemoteException;
+
+    void follow(User a, User b) throws RemoteException;
+
+    void unfollow(User a, User b) throws RemoteException;
 }

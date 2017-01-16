@@ -27,26 +27,28 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         return mainView;
     }
 
-    private void showTimeline() {
-        TimelinePresenter timelinePresenter = createPresenter(TimelinePresenterImpl.class);
-        getView().setNestedView(timelinePresenter.getView());
-    }
-
     @Override
     public void initialize(Client client) {
         super.initialize(client);
+        showUserInfo();
+        showTimeline();
+    }
 
+    private void showUserInfo(){
         try {
             getView().setUserName(getClient().getUser().getName());
             getView().setUserNick(getClient().getUser().getNick());
             getView().setUserTweets(getClient().getUser().getTweets().size());
             getView().setUserFollowing(getClient().getUser().getFollowing().size());
-
-            showTimeline();
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
+            getView().setUserFollowers(getClient().getUser().getFollowers().size());
+        } catch (RemoteException e1) {
+            e1.printStackTrace();
         }
+    }
+
+    private void showTimeline() {
+        TimelinePresenter timelinePresenter = createPresenter(TimelinePresenterImpl.class);
+        getView().setNestedView(timelinePresenter.getView());
     }
 
     @Override
@@ -70,21 +72,29 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
     @Override
     public void onFollowingClick() {
-
-        List<User> following = new ArrayList<>();
-
         try {
-            following = getClient().getUser().getFollowing();
+            setNestedPeopleView("Following", getClient().getUser().getFollowing());
         } catch (RemoteException e) {
             getView().showError("Error showing people you follow");
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void onFollowersClick() {
+        try {
+            setNestedPeopleView("Followers", getClient().getUser().getFollowers());
+        } catch (RemoteException e) {
+            getView().showError("Error showing people you follow");
+            e.printStackTrace();
+        }
+    }
+
+    private void setNestedPeopleView(String title, List<User> userList){
         PeoplePresenter peoplePresenter = createPresenter(PeoplePresenterImpl.class);
-        peoplePresenter.setUserList(following);
-        peoplePresenter.setTitle("Following");
+        peoplePresenter.setUserList(userList);
+        peoplePresenter.setTitle(title);
         setNestedView(peoplePresenter.getView());
-
     }
 
     @Override

@@ -12,13 +12,14 @@ public class UserImpl extends UnicastRemoteObject implements User {
 
     private List<Tweet> tweets;
     private List<User> following;
+    private List<User> followed;
     private List<Tweet> messages;
 
     public UserImpl() throws RemoteException {
         tweets = new ArrayList<>();
         following = new ArrayList<>();
+        followed = new ArrayList<>();
         messages = new ArrayList<>();
-
     }
 
     @Override
@@ -62,32 +63,33 @@ public class UserImpl extends UnicastRemoteObject implements User {
     }
 
     @Override
-    public void setTweets(List<Tweet> tweets) throws RemoteException {
-        this.tweets = tweets;
-    }
-
-    @Override
     public List<User> getFollowing() throws RemoteException {
         return following;
     }
 
     @Override
-    public void setFollowing(List<User> following) throws RemoteException {
-        this.following = following;
+    public List<User> getFollowers() throws RemoteException {
+        return followed;
     }
 
     @Override
     public void follow(User user) throws RemoteException {
-        if(!isFollowing(user)) {
-            following.add(user);
-        }
+        following.add(user);
+    }
+
+    @Override
+    public void followed(User user) throws RemoteException {
+        followed.add(user);
     }
 
     @Override
     public void unfollow(User user) throws RemoteException {
-        if (isFollowing(user)) {
-            following.remove(user);
-        }
+        following.remove(user);
+    }
+
+    @Override
+    public void unfollowed(User user) throws RemoteException {
+        followed.add(user);
     }
 
     @Override
@@ -103,11 +105,6 @@ public class UserImpl extends UnicastRemoteObject implements User {
     @Override
     public void addMessage(Tweet message) throws RemoteException {
         getMessages().add(message);
-    }
-
-    @Override
-    public void setMessages(List<Tweet> messages) throws RemoteException {
-        this.messages = messages;
     }
 
     @Override
