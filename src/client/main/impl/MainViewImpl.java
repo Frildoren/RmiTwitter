@@ -19,8 +19,14 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
     private Dimension WINDOW_DIMENSION = new Dimension(800,600);
     private String username;
     private String myname;
+
+    private JLabel numOfTweets;
     private int numberTweets;
+
+    private JLabel followingNumberLabel;
     private int numberFollowing;
+
+    private JLabel followersNumberLabel;
     private int numberFollowed;
 
     private JPanel centerZone;
@@ -40,16 +46,25 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
     @Override
     public void setUserTweets(int tweets) {
         numberTweets = tweets;
+        if(numOfTweets != null){
+            numOfTweets.setText(String.valueOf(numberTweets));
+        }
     }
 
     @Override
     public void setUserFollowing(int following) {
         numberFollowing = following;
+        if(followingNumberLabel != null){
+            followingNumberLabel.setText(String.valueOf(numberFollowing));
+        }
     }
 
     @Override
     public void setUserFollowers(int followed) {
         numberFollowed = followed;
+        if(followersNumberLabel != null){
+            followersNumberLabel.setText(String.valueOf(numberFollowed));
+        }
     }
 
     @Override
@@ -293,7 +308,7 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         tweetsLabel.setFont(infoLabels);
         tweets.add(tweetsLabel);
 
-        JLabel numOfTweets = new JLabel(String.valueOf(numberTweets));
+        numOfTweets = new JLabel(String.valueOf(numberTweets));
         numOfTweets.setForeground(new Color(0, 132, 180));
         numOfTweets.setAlignmentX(Component.CENTER_ALIGNMENT);
         numOfTweets.setFont(nameFont);
@@ -311,7 +326,7 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         followingLabel.setFont(infoLabels);
         following.add(followingLabel);
 
-        JLabel followingNumberLabel = new JLabel(String.valueOf(numberFollowing));
+        followingNumberLabel = new JLabel(String.valueOf(numberFollowing));
         followingNumberLabel.setForeground(new Color(0, 132, 180));
         followingNumberLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         followingNumberLabel.setFont(nameFont);
@@ -337,7 +352,7 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         followersLabel.setFont(infoLabels);
         followers.add(followersLabel);
 
-        JLabel followersNumberLabel = new JLabel(String.valueOf(numberFollowed));
+        followersNumberLabel = new JLabel(String.valueOf(numberFollowed));
         followersNumberLabel.setForeground(new Color(0, 132, 180));
         followersNumberLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         followersNumberLabel.setFont(nameFont);

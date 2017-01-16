@@ -14,6 +14,8 @@ import client.profile.ProfilePresenter;
 import client.profile.impl.ProfilePresenterImpl;
 import client.timeline.TimelinePresenter;
 import client.timeline.impl.TimelinePresenterImpl;
+import common.Callback;
+import common.impl.CallbackImpl;
 import common.models.User;
 import sun.plugin2.message.Message;
 
@@ -33,6 +35,21 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     @Override
     public void initialize(Client client) {
         super.initialize(client);
+
+        try {
+            getClient().getUser().setNotificationCallback(new CallbackImpl() {
+                @Override
+                public void onCall(String message) throws RemoteException {
+                    showUserInfo();
+                    if(message != null){
+                        getView().showError(message);
+                    }
+                }
+            });
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
         showUserInfo();
         showTimeline();
     }

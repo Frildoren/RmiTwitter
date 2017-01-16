@@ -1,5 +1,7 @@
 package common.models;
 
+import common.Callback;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
@@ -13,6 +15,7 @@ public class UserImpl extends UnicastRemoteObject implements User {
     private List<Tweet> tweets;
     private List<User> following;
     private List<User> followed;
+    private Callback callback;
     private Map<User, List<Tweet>> messages;
 
     public UserImpl() throws RemoteException {
@@ -60,6 +63,12 @@ public class UserImpl extends UnicastRemoteObject implements User {
     @Override
     public void addTweet(Tweet tweet) throws RemoteException {
         getTweets().add(tweet);
+        notifyCallback(null);
+        getFollowers().forEach(user -> {
+            try {
+                user.notifyCallback(getName() + " just tweeted!");
+            } catch (RemoteException e) {}
+        });
     }
 
     @Override
@@ -75,21 +84,34 @@ public class UserImpl extends UnicastRemoteObject implements User {
     @Override
     public void follow(User user) throws RemoteException {
         following.add(user);
+        notifyCallback(null);
     }
 
     @Override
     public void followed(User user) throws RemoteException {
         followed.add(user);
+        notifyCallback(user.getName() + " is now following you!");
     }
 
     @Override
     public void unfollow(User user) throws RemoteException {
         following.remove(user);
+        notifyCallback(null);
     }
 
     @Override
     public void unfollowed(User user) throws RemoteException {
-        followed.add(user);
+        followed.remove(user);
+        notifyCallback(user.getName() + " is no longer following you!");
+    }
+
+    @Override
+    public void notifyCallback(String message) throws RemoteException {
+        if(callback != null){
+            try {
+                callback.onCall(message);
+            } catch(RemoteException e){}
+        }
     }
 
     @Override
@@ -134,6 +156,11 @@ public class UserImpl extends UnicastRemoteObject implements User {
         });
 
         return new ArrayList<>(tweetMap.values());
+    }
+
+    @Override
+    public void setNotificationCallback(Callback callback) throws RemoteException {
+        this.callback = callback;
     }
 
 }
