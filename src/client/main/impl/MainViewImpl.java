@@ -21,6 +21,7 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
     private String myname;
     private int numberTweets;
     private int numberFollowing;
+    private int numberFollowed;
 
     private JPanel centerZone;
     private View nestedView;
@@ -44,6 +45,11 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
     @Override
     public void setUserFollowing(int following) {
         numberFollowing = following;
+    }
+
+    @Override
+    public void setUserFollowers(int followed) {
+        numberFollowed = followed;
     }
 
     @Override
@@ -331,10 +337,18 @@ public class MainViewImpl extends BaseFrameView<MainPresenter> implements MainVi
         followersLabel.setFont(infoLabels);
         followers.add(followersLabel);
 
-        JLabel followersNumberLabel = new JLabel("0");
+        JLabel followersNumberLabel = new JLabel(String.valueOf(numberFollowed));
         followersNumberLabel.setForeground(new Color(0, 132, 180));
         followersNumberLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         followersNumberLabel.setFont(nameFont);
+        followersNumberLabel.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                getPresenter().onFollowersClick();
+            }
+        });
+        followersNumberLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         followers.add(followersNumberLabel);
 
 

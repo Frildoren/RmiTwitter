@@ -13,5 +13,5 @@ public interface MainView extends FrameView<MainPresenter>, ParentView<MainPrese
     void setUserNick(String nick);
     void setUserTweets(int tweets);
     void setUserFollowing(int following);
-
+    void setUserFollowers(int size);
 }
