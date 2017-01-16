@@ -32,6 +32,7 @@ public class PeoplePresenterImpl extends BasePresenter<PeopleView> implements Pe
     public void onUserClick(User user){
         ProfilePresenter profilePresenter = createPresenter(ProfilePresenterImpl.class);
         profilePresenter.setUser(user);
+        profilePresenter.setParentPresenter(getParentPresenter());
         getParentPresenter().setNestedView(profilePresenter.getView());
     }
 

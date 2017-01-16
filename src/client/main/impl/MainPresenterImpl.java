@@ -6,18 +6,15 @@ import client.base.impl.BasePresenter;
 import client.login.impl.LoginPresenterImpl;
 import client.main.MainPresenter;
 import client.main.MainView;
-import client.messages.MessagesPresenter;
-import client.messages.impl.MessagesPresenterImpl;
+import client.messages.impl.ConversationsPresenterImpl;
 import client.people.PeoplePresenter;
 import client.people.impl.PeoplePresenterImpl;
 import client.profile.ProfilePresenter;
 import client.profile.impl.ProfilePresenterImpl;
 import client.timeline.TimelinePresenter;
 import client.timeline.impl.TimelinePresenterImpl;
-import common.Callback;
 import common.impl.CallbackImpl;
 import common.models.User;
-import sun.plugin2.message.Message;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -134,10 +131,10 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
             e.printStackTrace();
         }
 
-        MessagesPresenter messagesPresenter = createPresenter(MessagesPresenterImpl.class);
-        messagesPresenter.setUserList(messages);
-        messagesPresenter.setTitle("Messages");
-        setNestedView(messagesPresenter.getView());
+        PeoplePresenter conversationsPresenter = createPresenter(ConversationsPresenterImpl.class);
+        conversationsPresenter.setUserList(messages);
+        conversationsPresenter.setTitle("Messages");
+        setNestedView(conversationsPresenter.getView());
     }
 
     @Override

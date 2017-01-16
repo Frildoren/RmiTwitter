@@ -70,13 +70,13 @@ public class UserMessagesViewImpl extends BaseView<UserMessagesPresenter> implem
         tweetButton.setBorderPainted(false);
         tweetButton.setForeground(Color.WHITE);
         tweetButton.addActionListener(e -> {
-            //TODO:getPresenter().sendMessage(tweetZone.getText().trim());
+            getPresenter().sendMessage(tweetZone.getText().trim());
             tweetZone.setText("Escribe aquí el mensaje.");
             sendMessage.requestFocusInWindow();
         });
 
         tweetZone.addActionListener(e -> {
-            //TODO:getPresenter().sendMessage(tweetZone.getText().trim());
+            getPresenter().sendMessage(tweetZone.getText().trim());
             tweetZone.setText("Escribe aquí el mensaje.");
             sendMessage.requestFocusInWindow();
         });

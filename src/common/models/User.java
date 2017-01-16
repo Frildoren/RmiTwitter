@@ -45,7 +45,7 @@ public interface User extends Remote {
 
     void addMessage(User user, Tweet message) throws RemoteException;
 
-    void setMessages(Map<User, List<Tweet>> messages) throws RemoteException;
+    List<Tweet> getConversation(User user) throws RemoteException;
 
     List<Tweet> getTimeline() throws RemoteException;
 

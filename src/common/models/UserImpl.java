@@ -126,7 +126,12 @@ public class UserImpl extends UnicastRemoteObject implements User {
 
     @Override
     public void addMessage(User user, Tweet message) throws RemoteException {
+        getConversation(user);
+        messages.get(user).add(message);
+    }
 
+    @Override
+    public List<Tweet> getConversation(User user) throws RemoteException{
         List<Tweet> messagesList = getMessages().get(user);
 
         if(messagesList == null) {
@@ -134,13 +139,7 @@ public class UserImpl extends UnicastRemoteObject implements User {
             messages.put(user, messagesList);
         }
 
-        messagesList.add(message);
-
-    }
-
-    @Override
-    public void setMessages(Map<User, List<Tweet>> messages) throws RemoteException {
-        this.messages = messages;
+        return messagesList;
     }
 
     @Override
