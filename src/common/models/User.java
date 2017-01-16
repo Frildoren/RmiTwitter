@@ -3,6 +3,7 @@ package common.models;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 
 public interface User extends Remote {
 
@@ -36,9 +37,11 @@ public interface User extends Remote {
 
     boolean isFollowing(User user) throws RemoteException;
 
-    List<Tweet> getMessages() throws RemoteException;
+    Map<User, List<Tweet>> getMessages() throws RemoteException;
 
-    void addMessage(Tweet message) throws RemoteException;
+    void addMessage(User user, Tweet message) throws RemoteException;
+
+    void setMessages(Map<User, List<Tweet>> messages) throws RemoteException;
 
     List<Tweet> getTimeline() throws RemoteException;
 }

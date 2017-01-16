@@ -79,7 +79,7 @@ public class UserManagerImpl extends UnicastRemoteObject implements UserManager 
     @Override
     public void sendMessage (User dest, Tweet message) throws RemoteException {
         
-        dest.addMessage(message);
+        dest.addMessage(dest, message);
 
     }
 
